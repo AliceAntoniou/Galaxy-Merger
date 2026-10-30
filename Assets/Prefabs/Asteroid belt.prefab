@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AsteroidBelt
   team: 0
   blackhole: {fileID: 0}
-  spawnRate: 2
+  spawnRate: 5
   asteroidPrefab: {fileID: 1623539677615666818, guid: 3d6a18fa3914e1c4ead45a99dfee7c9f, type: 3}
 --- !u!212 &3545612910061509207
 SpriteRenderer:

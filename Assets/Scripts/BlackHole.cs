@@ -1,6 +1,8 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using Unity.VectorGraphics;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BlackHole : ATeam, IDamageable
 {
@@ -45,14 +47,25 @@ public class BlackHole : ATeam, IDamageable
         SpawnStarSystem(3, 2).AddAsteroidBelt();
         SpawnStarSystem(3, -2).AddSlingshotPlanetSpawer();
     }
+    private void Update()
+    {
+        transform.localScale = new Vector3(size - 1 + stardust / (size * 1000f), size - 1 + stardust / (size * 1000f), 1);
+        if (size <= 0)
+        {
+        }
+    }
 
     public void HealHp(int heal)
     {
-        return;
     }
 
     public void TakeDamage(int dmg)
     {
-        return;
+        stardust -= dmg;
+        if (stardust <= 0)
+        {
+            size--;
+            stardust = size * 1000;
+        }
     }
 }

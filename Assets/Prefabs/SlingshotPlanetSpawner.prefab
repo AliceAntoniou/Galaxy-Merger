@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SllingshotPlanetSpawer
   team: 0
   blackhole: {fileID: 0}
-  spawnRate: 5
+  spawnRate: 15
   slingshotPlanetPrefab: {fileID: 5722352149240903378, guid: 4c834d43ee609f14e9c0593306e621ae, type: 3}
 --- !u!212 &8647072367594679683
 SpriteRenderer:
