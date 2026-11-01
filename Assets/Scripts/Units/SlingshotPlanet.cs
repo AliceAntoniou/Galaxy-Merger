@@ -18,6 +18,7 @@ public class SlingshotPlanet : Unit, IPlanet
         {
             currentMoveSpeed += acceleration;
         }
+        if (currentMoveSpeed > maxSpeed) currentMoveSpeed = maxSpeed;
         transform.position += dir.normalized * currentMoveSpeed * Time.deltaTime;
     }
 

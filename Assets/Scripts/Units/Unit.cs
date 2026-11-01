@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class Unit : ATeam, IDamageable
 {
     [SerializeField] protected float detectionRange;

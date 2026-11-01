@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
 public class Asteroid : Unit
 {
     private void Start()
@@ -32,6 +31,7 @@ public class Asteroid : Unit
         {
             currentMoveSpeed += acceleration;
         }
+        if (currentMoveSpeed > maxSpeed) currentMoveSpeed = maxSpeed;
         transform.position += dir.normalized * currentMoveSpeed * Time.deltaTime;
     }
 
@@ -42,7 +42,13 @@ public class Asteroid : Unit
             return;
         }
 
-        currentMoveSpeed -= maxSpeed;
+        if (currentMoveSpeed > 0)
+        {
+            currentMoveSpeed = -maxSpeed;
+        } else
+        {
+            currentMoveSpeed -= currentMoveSpeed;
+        }
         IDamageable target = collision.gameObject.GetComponent<IDamageable>();
 
         if (target == null) return;

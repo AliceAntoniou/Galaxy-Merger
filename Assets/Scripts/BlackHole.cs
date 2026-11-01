@@ -52,7 +52,21 @@ public class BlackHole : ATeam, IDamageable
         transform.localScale = new Vector3(size - 1 + stardust / (size * 1000f), size - 1 + stardust / (size * 1000f), 1);
         if (size <= 0)
         {
+            //end
         }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if ((1 << collision.gameObject.layer) == GetMask())
+        {
+            return;
+        }
+
+        IDamageable target = collision.gameObject.GetComponent<IDamageable>();
+        if (target == null) return;
+
+        target.TakeDamage(size);
     }
 
     public void HealHp(int heal)
