@@ -1,0 +1,8 @@
+using Unity.Services.Core;
+using Unity.Services.Authentication;
+using Unity.Services.CloudCode;
+
+await UnityServices.InitializeAsync();
+await AuthenticationService.Instance.SignInAnonymouslyAsync();
+var result = await CloudCode.CallEndpointAsync<ResultType>("HelloWorld", new RequestType {});
+Debug.Log(result);

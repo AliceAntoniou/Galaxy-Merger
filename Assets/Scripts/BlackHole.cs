@@ -1,8 +1,5 @@
-using NUnit.Framework;
 using System.Collections.Generic;
-using Unity.VectorGraphics;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class BlackHole : ATeam, IDamageable
 {
@@ -39,13 +36,14 @@ public class BlackHole : ATeam, IDamageable
     private void Awake()
     {
         blackhole = this;
+        RpcTest test = new RpcTest();
     }
 
     private void Start()
     {
-        SpawnStarSystem(3, 0).AddAsteroidBelt();
-        SpawnStarSystem(3, 2).AddAsteroidBelt();
-        SpawnStarSystem(3, -2).AddSlingshotPlanetSpawer();
+        //SpawnStarSystem(3, 0).AddAsteroidBelt();
+        //SpawnStarSystem(3, 2).AddAsteroidBelt();
+        //SpawnStarSystem(3, -2).AddSlingshotPlanetSpawer();
     }
     private void Update()
     {
