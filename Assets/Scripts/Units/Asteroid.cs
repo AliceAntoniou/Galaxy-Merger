@@ -33,6 +33,7 @@ public class Asteroid : Unit
         }
         if (currentMoveSpeed > maxSpeed) currentMoveSpeed = maxSpeed;
         transform.position += dir.normalized * currentMoveSpeed * Time.deltaTime;
+        netpos.Value = transform.position;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -133,20 +133,31 @@ namespace HelloWorld
 
         void SubmitNewPosition()
         {
-            if (NetworkManager.Singleton.IsServer && !NetworkManager.Singleton.IsClient)
+            Debug.Log($"IsServer {NetworkManager.Singleton.IsServer}; IsClient {NetworkManager.Singleton.IsClient}");
+            if (NetworkManager.Singleton.IsServer)
             {
+                Debug.Log("miaou 1");
+                List<BlackHole> players = new();
                 foreach (ulong uid in NetworkManager.Singleton.ConnectedClientsIds)
                 {
+                    Debug.Log("miaou :3");
                     var playerObject = NetworkManager.Singleton.SpawnManager.GetPlayerNetworkObject(uid);
-                    var player = playerObject.GetComponent<HelloWorldPlayer>();
-                    player.Move();
+                    players.Add(playerObject.GetComponent<BlackHole>());
                 }
-            }
-            else if (NetworkManager.Singleton.IsClient)
+                players[0].StartGame(players[1]);
+                players[1].StartGame(players[0]);
+            } else if (NetworkManager.Singleton.IsClient)
             {
-                var playerObject = NetworkManager.Singleton.SpawnManager.GetLocalPlayerObject();
-                var player = playerObject.GetComponent<HelloWorldPlayer>();
-                player.Move();
+                Debug.Log("miaou 1");
+                List<BlackHole> players = new();
+                foreach (ulong uid in NetworkManager.Singleton.ConnectedClientsIds)
+                {
+                    Debug.Log("miaou :3");
+                    var playerObject = NetworkManager.Singleton.SpawnManager.GetLocalPlayerObject();
+                    players.Add(playerObject.GetComponent<BlackHole>());
+                }
+                players[0].StartGame(players[1]);
+                players[1].StartGame(players[0]);
             }
         }
     }
