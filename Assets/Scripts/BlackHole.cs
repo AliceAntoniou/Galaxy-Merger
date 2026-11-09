@@ -33,23 +33,10 @@ public class BlackHole : ATeam, IDamageable
 
     private void Awake()
     {
-<<<<<<< Updated upstream
-        blackhole = this;
-        RpcTest test = new RpcTest();
-=======
-
->>>>>>> Stashed changes
     }
 
     private void Start()
     {
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
-        //SpawnStarSystem(3, 0).AddAsteroidBelt();
-        //SpawnStarSystem(3, 2).AddAsteroidBelt();
-        //SpawnStarSystem(3, -2).AddSlingshotPlanetSpawer();
     }
     private void Update()
     {
