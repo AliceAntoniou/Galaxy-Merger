@@ -6,8 +6,8 @@ public class BlackHole : ATeam, IDamageable
     [Header("Resources")]
     [SerializeField] public int stardust;
     [SerializeField] public int protoStars;
-    [Header("Planets Prefabs")]
-    [SerializeField] private StarSystem starSystemPrefab;
+    [Header("Buildings Prefabs")]
+    [SerializeField] public StarSystem starSystemPrefab;
     [Space]
     [SerializeField] private BlackHole enemyBlackHole;
     [SerializeField] private int size;
@@ -16,12 +16,9 @@ public class BlackHole : ATeam, IDamageable
     public int GetSize() { return size; }
     public BlackHole GetEnemyBlackHole() { return enemyBlackHole; }
 
-    public StarSystem SpawnStarSystem(int x, int y, int starNbr = 1)
+    public StarSystem SpawnStarSystem(Vector2 pos, int starNbr = 1)
     {
         if (protoStars < starNbr) return null;
-
-        Vector3 pos = transform.position + new Vector3(x, y);
-        if (team == Team.player) { pos.x = -x; }
 
         StarSystem star = Instantiate(starSystemPrefab);
         star.transform.position = pos;
@@ -30,24 +27,33 @@ public class BlackHole : ATeam, IDamageable
         star.SetTeam(team);
 
         stars.Add(star);
+        protoStars -= starNbr;
         return star;
     }
 
     private void Awake()
     {
+<<<<<<< Updated upstream
         blackhole = this;
         RpcTest test = new RpcTest();
+=======
+
+>>>>>>> Stashed changes
     }
 
     private void Start()
     {
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
         //SpawnStarSystem(3, 0).AddAsteroidBelt();
         //SpawnStarSystem(3, 2).AddAsteroidBelt();
         //SpawnStarSystem(3, -2).AddSlingshotPlanetSpawer();
     }
     private void Update()
     {
-        transform.localScale = new Vector3(size - 1 + stardust / (size * 1000f), size - 1 + stardust / (size * 1000f), 1);
+        transform.localScale = new Vector3((size - 1) * 2 + stardust / (size * 1000f), (size - 1) * 2 + stardust / (size * 1000f), 1);
         if (size <= 0)
         {
             //end

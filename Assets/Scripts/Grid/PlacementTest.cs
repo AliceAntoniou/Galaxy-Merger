@@ -9,16 +9,6 @@ public class PlacementTest : MonoBehaviour
     private Vector3    mousePos;
     private HashSet<Vector3> unavailableGridPositions = new();
 
-    private Vector3 GetMousePosOnGrid() 
-    {
-        return GridManager.instance.GetCellPos(Camera.main.ScreenToWorldPoint(mousePos));
-    }
-
-    public void OnClick(InputAction.CallbackContext context)
-    {
-        if (context.started) SpawnBuilding(GetMousePosOnGrid(), TestBuildingPrefab);
-    }
-
     public void OnMoveMouse(InputAction.CallbackContext context)
     {
         mousePos = context.ReadValue<Vector2>();
