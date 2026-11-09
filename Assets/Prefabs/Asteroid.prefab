@@ -145,7 +145,7 @@ MonoBehaviour:
   acceleration: 0.02
   maxSpeed: 2
   pv: 10
-  damage: 2
+  damage: 3
 --- !u!58 &2465639800668892260
 CircleCollider2D:
   m_ObjectHideFlags: 0
