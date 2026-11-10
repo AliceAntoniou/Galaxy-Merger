@@ -46,11 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ce7bb1d0277fec468e65076aa1e012a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridManager
-  team: 0
-  blackhole: {fileID: 0}
   grid: {fileID: 989562577255087746}
-  gridSnapXOffset: 0.8659766
-  gridSnapYOffset: 1
+  blackHole: {fileID: 0}
+  tilePrefab: {fileID: 8058226895684807022, guid: 91788a5f91c319147bd6eb587187c039, type: 3}
 --- !u!156049354 &989562577255087746
 Grid:
   m_ObjectHideFlags: 0

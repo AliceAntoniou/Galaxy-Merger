@@ -1,25 +1,55 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Tilemaps;
+using static UnityEditor.PlayerSettings;
 
 [RequireComponent(typeof(Grid))]
 public class GridManager : MonoBehaviour
 {
     [SerializeField] private Grid grid;
     [SerializeField] private BlackHole blackHole;
+    [SerializeField] private Tile tilePrefab;
 
-    [SerializeField] private float gridSnapXOffset;
-    [SerializeField] private float gridSnapYOffset;
     private Vector3 mousePos;
     private HashSet<Vector3> unavailableGridPositions = new();
+    private int size;
+    private List<Tile> tiles = new();
 
 
     private void Awake()
     {
     }
+    private void Start()
+    {
+        setSize(blackHole.GetSize());
+    }
 
-    public Vector3 GetCellPos(Vector3 pos) 
+    private void setSize(int newSize)
+    {
+        size = newSize;
+        Vector3Int center = new Vector3Int(-size, 0, 0);
+        Vector3Int blackholeCenter = Vector3Int.zero;
+        tiles.ForEach(delegate (Tile tile) { Destroy(tile.gameObject); });
+        tiles.Clear();
+        for (int x = center.x - size; x <= center.x + size; x++)
+        {
+            for (int y = -size; y <= size; y++)
+            {
+                if (GetTileDistance(center, new Vector3Int(x, y, 0)) > size ||
+                    GetTileDistance(blackholeCenter, new Vector3Int(x, y, 0)) < size) continue;
+                tiles.Add(Instantiate(tilePrefab, grid.CellToWorld(new Vector3Int(x, y, 0)), this.transform.rotation));
+            }
+        }
+    }
+    private void Update()
+    {
+        if (size != blackHole.GetSize())
+        {
+            setSize(blackHole.GetSize());
+        }
+    }
+
+    public Vector3 GetCellPos(Vector3 pos)
     {
         Vector3Int cellPosition = new Vector3Int(grid.WorldToCell(pos).x, grid.WorldToCell(pos).y, 0);
         return grid.GetCellCenterWorld(cellPosition);
@@ -34,7 +64,8 @@ public class GridManager : MonoBehaviour
         if (!context.started) return;
         Vector3 pos = GetMousePosOnGrid();
         if (!IsOnGrid(pos)) return;
-        if (!IsCellEmpty(pos)) {
+        if (!IsCellEmpty(pos))
+        {
             if (blackHole.SpawnStarSystem(pos)) unavailableGridPositions.Add(pos);
         }
     }
@@ -49,7 +80,7 @@ public class GridManager : MonoBehaviour
         return unavailableGridPositions.Contains(gridPos);
     }
 
-    int GetTileDistance(Vector3Int a, Vector3Int b)
+    static private int GetTileDistance(Vector3Int a, Vector3Int b)
     {
         int dx = b.x - a.x;     // signed deltas
         int dy = b.y - a.y;
@@ -66,14 +97,10 @@ public class GridManager : MonoBehaviour
     private bool IsOnGrid(Vector3 gridPos)
     {
         Vector3Int pos = grid.WorldToCell(gridPos);
-        Debug.Log(pos);
         int size = blackHole.GetSize();
         Vector3Int gridCenter = new Vector3Int(-size, 0, 0);
-        Debug.Log(GetTileDistance(gridCenter, pos));
-        if (GetTileDistance(gridCenter, pos) > size)
-        {
-            return false;
-        }
-        return true;
+
+        return (GetTileDistance(gridCenter, pos) <= size &&
+            GetTileDistance(Vector3Int.zero, pos) >= size);
     }
 }
