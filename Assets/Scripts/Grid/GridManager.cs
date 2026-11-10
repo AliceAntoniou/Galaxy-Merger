@@ -8,14 +8,22 @@ public class GridManager : MonoBehaviour
 {
     [SerializeField] private Grid grid;
     [SerializeField] private BlackHole blackHole;
-    [SerializeField] private Tile tilePrefab;
+    [SerializeField] private SpriteRenderer tilePrefab;
+    [SerializeField] private int centerDistance;
 
     private Vector3 mousePos;
     private HashSet<Vector3> unavailableGridPositions = new();
     private int size;
-    private List<Tile> tiles = new();
+    private List<SpriteRenderer> tiles = new();
 
-
+    private Vector3Int GetGridCenter()
+    {
+        return new Vector3Int(-size - centerDistance, 0, 0);
+    }
+    private static Vector3Int GetBlackHoleCenter()
+    {
+        return Vector3Int.zero;
+    }
     private void Awake()
     {
     }
@@ -27,16 +35,15 @@ public class GridManager : MonoBehaviour
     private void setSize(int newSize)
     {
         size = newSize;
-        Vector3Int center = new Vector3Int(-size, 0, 0);
-        Vector3Int blackholeCenter = Vector3Int.zero;
-        tiles.ForEach(delegate (Tile tile) { Destroy(tile.gameObject); });
+        Vector3Int center = GetGridCenter();
+        tiles.ForEach(delegate (SpriteRenderer tile) { Destroy(tile.gameObject); });
         tiles.Clear();
         for (int x = center.x - size; x <= center.x + size; x++)
         {
             for (int y = -size; y <= size; y++)
             {
                 if (GetTileDistance(center, new Vector3Int(x, y, 0)) > size ||
-                    GetTileDistance(blackholeCenter, new Vector3Int(x, y, 0)) < size) continue;
+                    GetTileDistance(GetBlackHoleCenter(), new Vector3Int(x, y, 0)) < size) continue;
                 tiles.Add(Instantiate(tilePrefab, grid.CellToWorld(new Vector3Int(x, y, 0)), this.transform.rotation));
             }
         }
@@ -94,13 +101,12 @@ public class GridManager : MonoBehaviour
         return x + y;
     }
 
-    private bool IsOnGrid(Vector3 gridPos)
+    public bool IsOnGrid(Vector3 gridPos)
     {
         Vector3Int pos = grid.WorldToCell(gridPos);
         int size = blackHole.GetSize();
-        Vector3Int gridCenter = new Vector3Int(-size, 0, 0);
 
-        return (GetTileDistance(gridCenter, pos) <= size &&
-            GetTileDistance(Vector3Int.zero, pos) >= size);
+        return (GetTileDistance(GetGridCenter(), pos) <= size &&
+            GetTileDistance(GetBlackHoleCenter(), pos) >= size);
     }
 }

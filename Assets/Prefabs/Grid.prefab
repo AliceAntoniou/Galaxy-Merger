@@ -48,7 +48,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GridManager
   grid: {fileID: 989562577255087746}
   blackHole: {fileID: 0}
-  tilePrefab: {fileID: 8058226895684807022, guid: 91788a5f91c319147bd6eb587187c039, type: 3}
+  tilePrefab: {fileID: 7262472930373216392, guid: 91788a5f91c319147bd6eb587187c039, type: 3}
+  centerDistance: 0
 --- !u!156049354 &989562577255087746
 Grid:
   m_ObjectHideFlags: 0
@@ -57,7 +58,7 @@ Grid:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4328548416899537728}
   m_Enabled: 1
-  m_CellSize: {x: 0.8659766, y: 1, z: 1}
+  m_CellSize: {x: 1.1, y: 1, z: 1}
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 1
   m_CellSwizzle: 0
@@ -128,10 +129,10 @@ MonoBehaviour:
     m_ActionName: UI/TrackedDeviceOrientation
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11500000, guid: 4ce7bb1d0277fec468e65076aa1e012a, type: 3}
-        m_TargetAssemblyTypeName: UnityEditor.MonoScript, UnityEditor.CoreModule
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 4443472588150965352}
+        m_TargetAssemblyTypeName: GridManager, Assembly-CSharp
+        m_MethodName: OnClick
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -144,8 +145,8 @@ MonoBehaviour:
     m_ActionName: 'InGame/Click[/Mouse/leftButton]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PlacementTest, Assembly-CSharp
+      - m_Target: {fileID: 4443472588150965352}
+        m_TargetAssemblyTypeName: GridManager, Assembly-CSharp
         m_MethodName: OnMoveMouse
         m_Mode: 0
         m_Arguments:

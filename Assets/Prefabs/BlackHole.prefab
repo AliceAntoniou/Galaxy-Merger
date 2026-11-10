@@ -48,12 +48,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BlackHole
   team: 0
   blackhole: {fileID: 0}
-  stardust: 100
-  protoStars: 5
+  stardust: 1000
+  protoStars: 2000
   starSystemPrefab: {fileID: -7397714128837126791, guid: 384613c1f05cf8f4d85af69b0ee6e591, type: 3}
   enemyBlackHole: {fileID: 0}
-  size: 5
-  gridPrefab: {fileID: 4443472588150965352, guid: 1eb660690c08d54449a00e4ded81cf9a, type: 3}
+  size: 1
 --- !u!212 &2659536316975888831
 SpriteRenderer:
   serializedVersion: 2

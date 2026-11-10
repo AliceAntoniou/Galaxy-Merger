@@ -119,17 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!114 &315390016 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4443472588150965352, guid: 1eb660690c08d54449a00e4ded81cf9a, type: 3}
-  m_PrefabInstance: {fileID: 816227387}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ce7bb1d0277fec468e65076aa1e012a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GridManager
 --- !u!114 &452450518 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6035308770066700035, guid: de22c0e440e6b8941a932a8a029aba0a, type: 3}
@@ -297,42 +286,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 760880767908088036, guid: 1eb660690c08d54449a00e4ded81cf9a, type: 3}
-      propertyPath: m_ActionEvents.Array.data[10].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 760880767908088036, guid: 1eb660690c08d54449a00e4ded81cf9a, type: 3}
-      propertyPath: m_ActionEvents.Array.data[10].m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 315390016}
-    - target: {fileID: 760880767908088036, guid: 1eb660690c08d54449a00e4ded81cf9a, type: 3}
-      propertyPath: m_ActionEvents.Array.data[11].m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 315390016}
-    - target: {fileID: 760880767908088036, guid: 1eb660690c08d54449a00e4ded81cf9a, type: 3}
-      propertyPath: m_ActionEvents.Array.data[10].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnClick
-      objectReference: {fileID: 0}
-    - target: {fileID: 760880767908088036, guid: 1eb660690c08d54449a00e4ded81cf9a, type: 3}
-      propertyPath: m_ActionEvents.Array.data[11].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnMoveMouse
-      objectReference: {fileID: 0}
-    - target: {fileID: 760880767908088036, guid: 1eb660690c08d54449a00e4ded81cf9a, type: 3}
-      propertyPath: m_ActionEvents.Array.data[10].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: GridManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 760880767908088036, guid: 1eb660690c08d54449a00e4ded81cf9a, type: 3}
-      propertyPath: m_ActionEvents.Array.data[11].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: GridManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 989562577255087746, guid: 1eb660690c08d54449a00e4ded81cf9a, type: 3}
-      propertyPath: m_CellSize.x
-      value: 1.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 989562577255087746, guid: 1eb660690c08d54449a00e4ded81cf9a, type: 3}
-      propertyPath: m_CellSize.y
-      value: 1.2
-      objectReference: {fileID: 0}
     - target: {fileID: 3688420160637113317, guid: 1eb660690c08d54449a00e4ded81cf9a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -381,14 +334,6 @@ PrefabInstance:
       propertyPath: blackHole
       value: 
       objectReference: {fileID: 557029037}
-    - target: {fileID: 4443472588150965352, guid: 1eb660690c08d54449a00e4ded81cf9a, type: 3}
-      propertyPath: blackhole
-      value: 
-      objectReference: {fileID: 557029037}
-    - target: {fileID: 4443472588150965352, guid: 1eb660690c08d54449a00e4ded81cf9a, type: 3}
-      propertyPath: gridSnapYOffset
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -514,22 +459,6 @@ PrefabInstance:
     - target: {fileID: 4438585608818065608, guid: de22c0e440e6b8941a932a8a029aba0a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6035308770066700035, guid: de22c0e440e6b8941a932a8a029aba0a, type: 3}
-      propertyPath: grid
-      value: 
-      objectReference: {fileID: 315390016}
-    - target: {fileID: 6035308770066700035, guid: de22c0e440e6b8941a932a8a029aba0a, type: 3}
-      propertyPath: size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6035308770066700035, guid: de22c0e440e6b8941a932a8a029aba0a, type: 3}
-      propertyPath: stardust
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6035308770066700035, guid: de22c0e440e6b8941a932a8a029aba0a, type: 3}
-      propertyPath: protoStars
-      value: 2000
       objectReference: {fileID: 0}
     - target: {fileID: 6035308770066700035, guid: de22c0e440e6b8941a932a8a029aba0a, type: 3}
       propertyPath: enemyBlackHole
