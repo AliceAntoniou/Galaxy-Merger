@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "name": "UI Click",
+    "maps": [
+        {
+            "name": "UI",
+            "id": "f5c458ff-7994-4927-a8e1-0ef971f88b81",
+            "actions": [
+                {
+                    "name": "Right click",
+                    "type": "Button",
+                    "id": "b6302943-6f8b-480f-9d66-8f843125e3ce",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "4eec2801-729c-48cf-8103-42b307a3079b",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Right click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
