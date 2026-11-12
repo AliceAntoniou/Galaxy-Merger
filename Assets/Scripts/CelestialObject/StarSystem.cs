@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using static IPlanet;
 
-public class StarSystem : ATeam
+public class StarSystem : CelestialObject
 {
     [Header("Planets Prefabs")]
     [SerializeField] public AsteroidBelt asteroidBeltPrefab;

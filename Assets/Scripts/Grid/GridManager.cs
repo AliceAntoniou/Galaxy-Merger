@@ -10,6 +10,7 @@ public class GridManager : MonoBehaviour
     [SerializeField] private BlackHole blackHole;
     [SerializeField] private SpriteRenderer tilePrefab;
     [SerializeField] private int centerDistance;
+    [SerializeField] private GameObject shopUI;
 
     private Vector3 mousePos;
     private HashSet<Vector3> unavailableGridPositions = new();
@@ -58,7 +59,8 @@ public class GridManager : MonoBehaviour
 
     public Vector3 GetCellPos(Vector3 pos)
     {
-        Vector3Int cellPosition = new Vector3Int(grid.WorldToCell(pos).x, grid.WorldToCell(pos).y, 0);
+        Vector3Int cellPosition = grid.WorldToCell(pos);
+        cellPosition.z = 0;
         return grid.GetCellCenterWorld(cellPosition);
     }
     private Vector3 GetMousePosOnGrid()
@@ -73,7 +75,15 @@ public class GridManager : MonoBehaviour
         if (!IsOnGrid(pos)) return;
         if (!IsCellEmpty(pos))
         {
+            //shopUI.SetActive(true);
             if (blackHole.SpawnStarSystem(pos)) unavailableGridPositions.Add(pos);
+            return;
+        }
+        CelestialObject obj = GetCelestialObject(pos);
+        if (obj != null) {
+            //open obj info
+            Debug.Log("open obj info");
+            return;
         }
     }
 
@@ -108,5 +118,13 @@ public class GridManager : MonoBehaviour
 
         return (GetTileDistance(GetGridCenter(), pos) <= size &&
             GetTileDistance(GetBlackHoleCenter(), pos) >= size);
+    }
+    public CelestialObject GetCelestialObject(Vector3 pos)
+    {
+        foreach (var celestialObject in blackHole.celestialObjects)
+        {
+            if (celestialObject.transform.position == GetCellPos(pos)) return celestialObject;
+        }
+        return null;
     }
 }

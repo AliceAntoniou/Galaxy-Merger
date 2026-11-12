@@ -12,7 +12,7 @@ public class BlackHole : ATeam, IDamageable
     [Space]
     [SerializeField] private BlackHole enemyBlackHole;
     [SerializeField] private int size;
-    private List<StarSystem> stars = new();
+    public List<CelestialObject> celestialObjects = new();
 
     public int GetSize() { return size; }
     public BlackHole GetEnemyBlackHole() { return enemyBlackHole; }
@@ -26,8 +26,9 @@ public class BlackHole : ATeam, IDamageable
         star.starNbr = starNbr;
         star.blackhole = this;
         star.SetTeam(team);
+        star.SetType(CelestialObject.Type.StarSystem);
 
-        stars.Add(star);
+        celestialObjects.Add(star);
         protoStars -= starNbr;
         return star;
     }
