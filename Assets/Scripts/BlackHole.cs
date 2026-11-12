@@ -35,7 +35,7 @@ public class BlackHole : ATeam, IDamageable
             star.starNbr = 1;
             star.blackhole = this;
             star.SetTeam(team);
-            star.SetType(CelestialObject.Type.StarSystem);
+            star.SetCelestialType(CelestialObject.Type.StarSystem);
 
             celestialObjects.Add(star);
             protoStars -= 1;
@@ -49,7 +49,7 @@ public class BlackHole : ATeam, IDamageable
             nebula.transform.position = pos;
             nebula.blackhole = this;
             nebula.SetTeam(team);
-            nebula.SetType(CelestialObject.Type.Nebula);
+            nebula.SetCelestialType(CelestialObject.Type.Nebula);
 
             celestialObjects.Add(nebula);
             stardust -= nebulaStardustPrice;
@@ -62,7 +62,7 @@ public class BlackHole : ATeam, IDamageable
             stellarNursery.transform.position = pos;
             stellarNursery.blackhole = this;
             stellarNursery.SetTeam(team);
-            stellarNursery.SetType(CelestialObject.Type.Nebula);
+            stellarNursery.SetCelestialType(CelestialObject.Type.Nebula);
 
             celestialObjects.Add(stellarNursery);
             stardust -= nebulaStardustPrice;

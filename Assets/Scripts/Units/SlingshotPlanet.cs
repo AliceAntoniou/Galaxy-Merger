@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class SlingshotPlanet : Unit, IPlanet
+public class SlingshotPlanet : Unit
 {
     [SerializeField] private float range;
     [SerializeField] private float atkSpeed;

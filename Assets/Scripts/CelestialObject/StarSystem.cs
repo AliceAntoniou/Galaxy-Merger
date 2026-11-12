@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static IPlanet;
 
 public class StarSystem : CelestialObject
 {
@@ -13,7 +12,7 @@ public class StarSystem : CelestialObject
     [Space]
     [SerializeField] public int starNbr;
     [SerializeField] public int maxPlanets = 1;
-    private List<IPlanet> planets = new();
+    private List<Planet> planets = new();
 
 
     //public bool AddPlanet(planetTypes type)

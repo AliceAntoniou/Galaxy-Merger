@@ -17,6 +17,7 @@ public class GridManager : MonoBehaviour
     private List<SpriteRenderer> tiles = new();
 
     [SerializeField] private CelestialObject.Type type;
+    [SerializeField] private Planet.Type ptype;
 
     private Vector3Int GetGridCenter()
     {
@@ -127,6 +128,24 @@ public class GridManager : MonoBehaviour
         CelestialObject obj = GetCelestialObject(pos);
         if (obj != null)
         {
+            if (obj.GetCelestialType() == CelestialObject.Type.StarSystem)
+            {
+                var star = (StarSystem)obj;
+                if (ptype == Planet.Type.asteroidBelt)
+                {
+                    star.AddAsteroidBelt();
+                    return;
+                }
+                if (ptype == Planet.Type.iceBelt)
+                {
+                    return;
+                }
+                if (ptype == Planet.Type.slingshotPlanet)
+                {
+                    star.AddSlingshotPlanetSpawer();
+                    return;
+                }
+            }
             //open obj info
             Debug.Log("open obj info");
             return;

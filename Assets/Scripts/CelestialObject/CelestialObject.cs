@@ -14,7 +14,7 @@ public class CelestialObject : ATeam
     {
         return type;
     }
-    public void SetType(Type newType)
+    public void SetCelestialType(Type newType)
     {
         type = newType;
     }
