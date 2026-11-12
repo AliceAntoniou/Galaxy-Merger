@@ -7,8 +7,15 @@ public class BlackHole : ATeam, IDamageable
     [Header("Resources")]
     [SerializeField] public int stardust;
     [SerializeField] public int protoStars;
-    [Header("Buildings Prefabs")]
+    [Header("Celestial Objects")]
     [SerializeField] public StarSystem starSystemPrefab;
+    [SerializeField] private int starSystemStardustPrice;
+    [Space]
+    [SerializeField] public StellarNursery stellarNurseryPrefab;
+    [SerializeField] private int stellarNurseryStardustPrice;
+    [Space]
+    [SerializeField] public Nebula nebulaPrefab;
+    [SerializeField] private int nebulaStardustPrice;
     [Space]
     [SerializeField] private BlackHole enemyBlackHole;
     [SerializeField] private int size;
@@ -17,22 +24,58 @@ public class BlackHole : ATeam, IDamageable
     public int GetSize() { return size; }
     public BlackHole GetEnemyBlackHole() { return enemyBlackHole; }
 
-    public StarSystem SpawnStarSystem(Vector2 pos, int starNbr = 1)
+    public CelestialObject SpawnCelestialObject(CelestialObject.Type type, Vector2 pos)
     {
-        if (protoStars < starNbr) return null;
+        if (type == CelestialObject.Type.StarSystem)
+        {
+            if (protoStars < 1 || starSystemStardustPrice > stardust) return null;
 
-        StarSystem star = Instantiate(starSystemPrefab);
-        star.transform.position = pos;
-        star.starNbr = starNbr;
-        star.blackhole = this;
-        star.SetTeam(team);
-        star.SetType(CelestialObject.Type.StarSystem);
+            StarSystem star = Instantiate(starSystemPrefab);
+            star.transform.position = pos;
+            star.starNbr = 1;
+            star.blackhole = this;
+            star.SetTeam(team);
+            star.SetType(CelestialObject.Type.StarSystem);
 
-        celestialObjects.Add(star);
-        protoStars -= starNbr;
-        return star;
+            celestialObjects.Add(star);
+            protoStars -= 1;
+            stardust -= starSystemStardustPrice;
+            return star;
+        }
+        if (type == CelestialObject.Type.Nebula)
+        {
+            if (nebulaStardustPrice > stardust) return null;
+            Nebula nebula = Instantiate(nebulaPrefab);
+            nebula.transform.position = pos;
+            nebula.blackhole = this;
+            nebula.SetTeam(team);
+            nebula.SetType(CelestialObject.Type.Nebula);
+
+            celestialObjects.Add(nebula);
+            stardust -= nebulaStardustPrice;
+            return nebula;
+        }
+        if (type == CelestialObject.Type.StellarNurseries)
+        {
+            if (stellarNurseryStardustPrice > stardust) return null;
+            StellarNursery stellarNursery = Instantiate(stellarNurseryPrefab);
+            stellarNursery.transform.position = pos;
+            stellarNursery.blackhole = this;
+            stellarNursery.SetTeam(team);
+            stellarNursery.SetType(CelestialObject.Type.Nebula);
+
+            celestialObjects.Add(stellarNursery);
+            stardust -= nebulaStardustPrice;
+            return stellarNursery;
+        }
+        return null;
     }
-
+    public void Upgrade()
+    {
+        if (stardust < size * 1000) return;
+        stardust -= size * 1000;
+        size++;
+    }
     private void Awake()
     {
     }

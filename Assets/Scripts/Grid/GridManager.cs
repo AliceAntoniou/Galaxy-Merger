@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEditor.PlayerSettings;
 
 [RequireComponent(typeof(Grid))]
 public class GridManager : MonoBehaviour
@@ -16,6 +15,8 @@ public class GridManager : MonoBehaviour
     private HashSet<Vector3> unavailableGridPositions = new();
     private int size;
     private List<SpriteRenderer> tiles = new();
+
+    [SerializeField] private CelestialObject.Type type;
 
     private Vector3Int GetGridCenter()
     {
@@ -32,12 +33,28 @@ public class GridManager : MonoBehaviour
     {
         setSize(blackHole.GetSize());
     }
-
+    private void RemoveTile(SpriteRenderer tile)
+    {
+        if (!IsCellEmpty(tile.transform.position))
+        {
+            foreach (var obj in blackHole.celestialObjects)
+            {
+                if (Vector3.Distance(obj.transform.position, tile.transform.position) == 0)
+                {
+                    blackHole.celestialObjects.Remove(obj);
+                    Destroy(obj.gameObject);
+                    break;
+                }
+            }
+        }
+        unavailableGridPositions.Remove(tile.transform.position);
+        Destroy(tile.gameObject);
+    }
     private void setSize(int newSize)
     {
         size = newSize;
         Vector3Int center = GetGridCenter();
-        tiles.ForEach(delegate (SpriteRenderer tile) { Destroy(tile.gameObject); });
+        tiles.ForEach(delegate (SpriteRenderer tile) { if (IsBlackhole(tile.transform.position)) RemoveTile(tile); });
         tiles.Clear();
         for (int x = center.x - size; x <= center.x + size; x++)
         {
@@ -72,15 +89,44 @@ public class GridManager : MonoBehaviour
     {
         if (!context.started) return;
         Vector3 pos = GetMousePosOnGrid();
+        if (IsBlackhole(pos))
+        {
+            blackHole.Upgrade();
+            return;
+        }
         if (!IsOnGrid(pos)) return;
-        if (!IsCellEmpty(pos))
+        if (IsCellEmpty(pos))
         {
             //shopUI.SetActive(true);
-            if (blackHole.SpawnStarSystem(pos)) unavailableGridPositions.Add(pos);
+            if (type == CelestialObject.Type.StarSystem)
+            {
+                if (blackHole.SpawnCelestialObject(CelestialObject.Type.StarSystem, pos))
+                {
+                    unavailableGridPositions.Add(pos);
+                    return;
+                }
+            }
+            if (type == CelestialObject.Type.Nebula)
+            {
+                if (blackHole.SpawnCelestialObject(CelestialObject.Type.Nebula, pos))
+                {
+                    unavailableGridPositions.Add(pos);
+                    return;
+                }
+            }
+            if (type == CelestialObject.Type.StellarNurseries)
+            {
+                if (blackHole.SpawnCelestialObject(CelestialObject.Type.StellarNurseries, pos))
+                {
+                    unavailableGridPositions.Add(pos);
+                    return;
+                }
+            }
             return;
         }
         CelestialObject obj = GetCelestialObject(pos);
-        if (obj != null) {
+        if (obj != null)
+        {
             //open obj info
             Debug.Log("open obj info");
             return;
@@ -94,7 +140,7 @@ public class GridManager : MonoBehaviour
 
     private bool IsCellEmpty(Vector3 gridPos)
     {
-        return unavailableGridPositions.Contains(gridPos);
+        return !unavailableGridPositions.Contains(gridPos);
     }
 
     static private int GetTileDistance(Vector3Int a, Vector3Int b)
@@ -111,13 +157,20 @@ public class GridManager : MonoBehaviour
         return x + y;
     }
 
-    public bool IsOnGrid(Vector3 gridPos)
+    public bool IsOnGrid(Vector3 pos)
     {
-        Vector3Int pos = grid.WorldToCell(gridPos);
+        Vector3Int gridPos = grid.WorldToCell(pos);
         int size = blackHole.GetSize();
 
-        return (GetTileDistance(GetGridCenter(), pos) <= size &&
-            GetTileDistance(GetBlackHoleCenter(), pos) >= size);
+        return (GetTileDistance(GetGridCenter(), gridPos) <= size &&
+            GetTileDistance(GetBlackHoleCenter(), gridPos) >= size);
+    }
+    public bool IsBlackhole(Vector3 pos)
+    {
+        Vector3Int gridPos = grid.WorldToCell(pos);
+        int size = blackHole.GetSize();
+
+        return GetTileDistance(GetBlackHoleCenter(), gridPos) < size;
     }
     public CelestialObject GetCelestialObject(Vector3 pos)
     {

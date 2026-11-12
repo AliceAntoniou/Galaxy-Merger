@@ -50,9 +50,15 @@ MonoBehaviour:
   blackhole: {fileID: 0}
   stardust: 1000
   protoStars: 2000
-  starSystemPrefab: {fileID: -7397714128837126791, guid: 384613c1f05cf8f4d85af69b0ee6e591, type: 3}
+  starSystemPrefab: {fileID: 3156633609276152599, guid: 6ad6efbafbbf9004bbbce43dea6a2ca6, type: 3}
+  starSystemStardustPrice: 200
+  stellarNurseryPrefab: {fileID: 3556680517160344495, guid: 94fdad48f9b622040ae8c9d20f99c764, type: 3}
+  stellarNurseryStardustPrice: 500
+  nebulaPrefab: {fileID: 7133898206490927512, guid: 804d6b656ef811344b0e881c3cd7d8c1, type: 3}
+  nebulaStardustPrice: 100
   enemyBlackHole: {fileID: 0}
   size: 1
+  celestialObjects: []
 --- !u!212 &2659536316975888831
 SpriteRenderer:
   serializedVersion: 2
