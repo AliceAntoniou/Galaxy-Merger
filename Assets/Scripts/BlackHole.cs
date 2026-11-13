@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -6,6 +7,7 @@ public class BlackHole : ATeam, IDamageable
 {
     [Header("Resources")]
     [SerializeField] public int stardust;
+    [SerializeField] private float stardustProductionRate;
     [SerializeField] public int protoStars;
     [Header("Celestial Objects")]
     [SerializeField] public StarSystem starSystemPrefab;
@@ -22,13 +24,17 @@ public class BlackHole : ATeam, IDamageable
     public List<CelestialObject> celestialObjects = new();
 
     public int GetSize() { return size; }
+    private void UpdateWordlSize()
+    {
+        transform.localScale = new Vector3(((size - 1) * 2 + stardust / (size * 1000f)) * 2, ((size - 1) * 2 + stardust / (size * 1000f)) * 2, 1);
+    }
     public BlackHole GetEnemyBlackHole() { return enemyBlackHole; }
 
     public CelestialObject SpawnCelestialObject(CelestialObject.Type type, Vector2 pos)
     {
         if (type == CelestialObject.Type.StarSystem)
         {
-            if (protoStars < 1 || starSystemStardustPrice > stardust) return null;
+            if (protoStars < 1 || starSystemStardustPrice >= stardust) return null;
 
             StarSystem star = Instantiate(starSystemPrefab);
             star.transform.position = pos;
@@ -44,7 +50,7 @@ public class BlackHole : ATeam, IDamageable
         }
         if (type == CelestialObject.Type.Nebula)
         {
-            if (nebulaStardustPrice > stardust) return null;
+            if (nebulaStardustPrice >= stardust) return null;
             Nebula nebula = Instantiate(nebulaPrefab);
             nebula.transform.position = pos;
             nebula.blackhole = this;
@@ -57,7 +63,7 @@ public class BlackHole : ATeam, IDamageable
         }
         if (type == CelestialObject.Type.StellarNurseries)
         {
-            if (stellarNurseryStardustPrice > stardust) return null;
+            if (stellarNurseryStardustPrice >= stardust) return null;
             StellarNursery stellarNursery = Instantiate(stellarNurseryPrefab);
             stellarNursery.transform.position = pos;
             stellarNursery.blackhole = this;
@@ -65,7 +71,7 @@ public class BlackHole : ATeam, IDamageable
             stellarNursery.SetCelestialType(CelestialObject.Type.Nebula);
 
             celestialObjects.Add(stellarNursery);
-            stardust -= nebulaStardustPrice;
+            stardust -= stellarNurseryStardustPrice;
             return stellarNursery;
         }
         return null;
@@ -79,13 +85,17 @@ public class BlackHole : ATeam, IDamageable
     private void Awake()
     {
     }
-
+    private void StardustProduction()
+    {
+        stardust++;
+    }
     private void Start()
     {
+        InvokeRepeating("StardustProduction", stardustProductionRate, stardustProductionRate);
     }
     private void Update()
     {
-        transform.localScale = new Vector3((size - 1) * 2 + stardust / (size * 1000f), (size - 1) * 2 + stardust / (size * 1000f), 1);
+        UpdateWordlSize();
         if (size <= 0)
         {
             //end

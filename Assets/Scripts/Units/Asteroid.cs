@@ -4,13 +4,7 @@ public class Asteroid : Unit
 {
     private void Start()
     {
-        if (team == Team.player)
-        {
-            gameObject.GetComponentInChildren<SpriteRenderer>().color = Color.green;
-        } else
-        {
-            gameObject. GetComponentInChildren<SpriteRenderer>().color = Color.red;
-        }
+
     }
 
     private void FixedUpdate()

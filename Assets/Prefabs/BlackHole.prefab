@@ -47,15 +47,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BlackHole
   team: 0
-  blackhole: {fileID: 0}
-  stardust: 1000
+  blackhole: {fileID: 6035308770066700035}
+  stardust: 70
+  stardustProductionRate: 1
   protoStars: 2000
   starSystemPrefab: {fileID: 3156633609276152599, guid: 6ad6efbafbbf9004bbbce43dea6a2ca6, type: 3}
-  starSystemStardustPrice: 200
+  starSystemStardustPrice: 150
   stellarNurseryPrefab: {fileID: 3556680517160344495, guid: 94fdad48f9b622040ae8c9d20f99c764, type: 3}
-  stellarNurseryStardustPrice: 500
+  stellarNurseryStardustPrice: 250
   nebulaPrefab: {fileID: 7133898206490927512, guid: 804d6b656ef811344b0e881c3cd7d8c1, type: 3}
-  nebulaStardustPrice: 100
+  nebulaStardustPrice: 50
   enemyBlackHole: {fileID: 0}
   size: 1
   celestialObjects: []

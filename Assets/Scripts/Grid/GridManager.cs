@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Grid))]
-public class GridManager : MonoBehaviour
+public class GridManager : ATeam
 {
     [SerializeField] private Grid grid;
     [SerializeField] private BlackHole blackHole;
@@ -36,19 +36,20 @@ public class GridManager : MonoBehaviour
     }
     private void RemoveTile(SpriteRenderer tile)
     {
-        if (!IsCellEmpty(tile.transform.position))
+        var pos = new Vector3(tile.transform.position.x, tile.transform.position.y, 0);
+        if (!IsCellEmpty(pos))
         {
             foreach (var obj in blackHole.celestialObjects)
             {
-                if (Vector3.Distance(obj.transform.position, tile.transform.position) == 0)
+                if (Vector3.Distance(obj.transform.position, pos) == 0)
                 {
                     blackHole.celestialObjects.Remove(obj);
                     Destroy(obj.gameObject);
                     break;
                 }
             }
+            unavailableGridPositions.Remove(pos);
         }
-        unavailableGridPositions.Remove(tile.transform.position);
         Destroy(tile.gameObject);
     }
     private void setSize(int newSize)
@@ -63,7 +64,7 @@ public class GridManager : MonoBehaviour
             {
                 if (GetTileDistance(center, new Vector3Int(x, y, 0)) > size ||
                     GetTileDistance(GetBlackHoleCenter(), new Vector3Int(x, y, 0)) < size) continue;
-                tiles.Add(Instantiate(tilePrefab, grid.CellToWorld(new Vector3Int(x, y, 0)), this.transform.rotation));
+                tiles.Add(Instantiate(tilePrefab, grid.CellToWorld(new Vector3Int(x, y, 2)), this.transform.rotation));
             }
         }
     }
@@ -86,13 +87,17 @@ public class GridManager : MonoBehaviour
         return GetCellPos(Camera.main.ScreenToWorldPoint(mousePos));
     }
 
+    public void UpgradeBlackhole()
+    {
+        blackHole.Upgrade();
+    }
     public void OnClick(InputAction.CallbackContext context)
     {
         if (!context.started) return;
         Vector3 pos = GetMousePosOnGrid();
         if (IsBlackhole(pos))
         {
-            blackHole.Upgrade();
+            UpgradeBlackhole();
             return;
         }
         if (!IsOnGrid(pos)) return;

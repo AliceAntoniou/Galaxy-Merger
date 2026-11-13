@@ -58,4 +58,12 @@ public class StarSystem : CelestialObject
     {
         
     }
+    private void OnDestroy()
+    {
+        foreach (var planet in planets)
+        {
+            if (planet != null)
+                Destroy(planet.gameObject);
+        }
+    }
 }
