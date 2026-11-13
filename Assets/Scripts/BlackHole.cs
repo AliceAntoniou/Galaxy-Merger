@@ -1,14 +1,16 @@
 using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
 public class BlackHole : ATeam, IDamageable
 {
     [Header("Resources")]
     [SerializeField] public int stardust;
-    [SerializeField] private float stardustProductionRate;
     [SerializeField] public int protoStars;
+    [Space]
+    [SerializeField] private float stardustProductionRate;
     [Header("Celestial Objects")]
     [SerializeField] public StarSystem starSystemPrefab;
     [SerializeField] private int starSystemStardustPrice;
@@ -21,73 +23,99 @@ public class BlackHole : ATeam, IDamageable
     [Space]
     [SerializeField] private BlackHole enemyBlackHole;
     [SerializeField] private int size;
+    [Space]
+    [SerializeField] private int[] blackholeUpgradePrice = { };
     public List<CelestialObject> celestialObjects = new();
 
+    public int GetMaxStardust()
+    {
+        return (int)(GetUpgradePrice() + GetUpgradePrice() * (size / 10f));
+    }
+    private int GetUpgradePrice()
+    {
+        return blackholeUpgradePrice[size - 1];
+    }
     public int GetSize() { return size; }
     private void UpdateWordlSize()
     {
-        transform.localScale = new Vector3(((size - 1) * 2 + stardust / (size * 1000f)) * 2, ((size - 1) * 2 + stardust / (size * 1000f)) * 2, 1);
+        float scale = (size - 1 + stardust * size / (float)(size * GetUpgradePrice())) * 2;
+        transform.localScale = new Vector3(scale, scale, 1);
     }
     public BlackHole GetEnemyBlackHole() { return enemyBlackHole; }
 
+    public StarSystem SpawnStarSystem(Vector2 pos)
+    {
+        if (protoStars < 1 || starSystemStardustPrice >= stardust) return null;
+
+        StarSystem star = Instantiate(starSystemPrefab);
+        star.transform.position = pos;
+        star.starNbr = 1;
+        star.blackhole = this;
+        star.SetTeam(team);
+        star.SetCelestialType(CelestialObject.Type.StarSystem);
+
+        celestialObjects.Add(star);
+        protoStars -= 1;
+        stardust -= starSystemStardustPrice;
+        starSystemStardustPrice += starSystemStardustPrice / 10;
+        return star;
+    }
+    public Nebula SpawnNebula(Vector2 pos)
+    {
+        if (nebulaStardustPrice >= stardust) return null;
+        Nebula nebula = Instantiate(nebulaPrefab);
+        nebula.transform.position = pos;
+        nebula.blackhole = this;
+        nebula.SetTeam(team);
+        nebula.SetCelestialType(CelestialObject.Type.Nebula);
+
+        celestialObjects.Add(nebula);
+        stardust -= nebulaStardustPrice;
+        nebulaStardustPrice += nebulaStardustPrice / 10;
+        return nebula;
+    }
+    public StellarNursery SpawnStellarNursery(Vector2 pos)
+    {
+        if (stellarNurseryStardustPrice >= stardust) return null;
+        StellarNursery stellarNursery = Instantiate(stellarNurseryPrefab);
+        stellarNursery.transform.position = pos;
+        stellarNursery.blackhole = this;
+        stellarNursery.SetTeam(team);
+        stellarNursery.SetCelestialType(CelestialObject.Type.Nebula);
+
+        celestialObjects.Add(stellarNursery);
+        stardust -= stellarNurseryStardustPrice;
+        stellarNurseryStardustPrice += stellarNurseryStardustPrice / 10;
+        return stellarNursery;
+    }
+
     public CelestialObject SpawnCelestialObject(CelestialObject.Type type, Vector2 pos)
     {
-        if (type == CelestialObject.Type.StarSystem)
+        switch (type)
         {
-            if (protoStars < 1 || starSystemStardustPrice >= stardust) return null;
-
-            StarSystem star = Instantiate(starSystemPrefab);
-            star.transform.position = pos;
-            star.starNbr = 1;
-            star.blackhole = this;
-            star.SetTeam(team);
-            star.SetCelestialType(CelestialObject.Type.StarSystem);
-
-            celestialObjects.Add(star);
-            protoStars -= 1;
-            stardust -= starSystemStardustPrice;
-            return star;
-        }
-        if (type == CelestialObject.Type.Nebula)
-        {
-            if (nebulaStardustPrice >= stardust) return null;
-            Nebula nebula = Instantiate(nebulaPrefab);
-            nebula.transform.position = pos;
-            nebula.blackhole = this;
-            nebula.SetTeam(team);
-            nebula.SetCelestialType(CelestialObject.Type.Nebula);
-
-            celestialObjects.Add(nebula);
-            stardust -= nebulaStardustPrice;
-            return nebula;
-        }
-        if (type == CelestialObject.Type.StellarNurseries)
-        {
-            if (stellarNurseryStardustPrice >= stardust) return null;
-            StellarNursery stellarNursery = Instantiate(stellarNurseryPrefab);
-            stellarNursery.transform.position = pos;
-            stellarNursery.blackhole = this;
-            stellarNursery.SetTeam(team);
-            stellarNursery.SetCelestialType(CelestialObject.Type.Nebula);
-
-            celestialObjects.Add(stellarNursery);
-            stardust -= stellarNurseryStardustPrice;
-            return stellarNursery;
+            case CelestialObject.Type.StarSystem:
+                return SpawnStarSystem(pos);
+            case CelestialObject.Type.Nebula:
+                return SpawnNebula(pos);
+            case CelestialObject.Type.StellarNurseries:
+                return SpawnStellarNursery(pos);
         }
         return null;
     }
-    public void Upgrade()
+    public bool Upgrade()
     {
-        if (stardust < size * 1000) return;
-        stardust -= size * 1000;
+        if (stardust < GetUpgradePrice()) return false;
+        stardust -= GetUpgradePrice();
         size++;
+        return true;
     }
     private void Awake()
     {
     }
     private void StardustProduction()
     {
-        stardust++;
+        if (stardust >= GetMaxStardust()) return;
+        stardust += size;
     }
     private void Start()
     {

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class StarSystem : CelestialObject
@@ -32,6 +33,8 @@ public class StarSystem : CelestialObject
         planet.SetTeam(team);
 
         planets.Add(planet);
+        blackhole.stardust -= asteroidPrice;
+        asteroidPrice += asteroidPrice / 10;
         return true;
     }
     public bool AddSlingshotPlanetSpawer()
@@ -46,7 +49,22 @@ public class StarSystem : CelestialObject
         planet.SetTeam(team);
 
         planets.Add(planet);
+        blackhole.stardust -= slingshotPrice;
+        slingshotPrice += slingshotPrice / 10;
         return true;
+    }
+    public bool AddPlanet(Planet.Type type)
+    {
+        switch (type)
+        {
+            case Planet.Type.asteroidBelt:
+                return AddAsteroidBelt();
+            case Planet.Type.iceBelt:
+                return false;
+            case Planet.Type.slingshotPlanet:
+                return AddSlingshotPlanetSpawer();
+        }
+        return false;
     }
 
     void Start()
