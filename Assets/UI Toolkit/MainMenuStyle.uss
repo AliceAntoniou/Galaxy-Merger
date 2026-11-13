@@ -1,5 +1,7 @@
 .header {
     color: rgb(255, 255, 255);
+    align-self: center;
+    font-size: 40px;
 }
 
 .button {

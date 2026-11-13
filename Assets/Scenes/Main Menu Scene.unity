@@ -188,6 +188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5585c7968d1849e4ea0fc05783655df1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainMenuEvent
+  settingsButtonTemplate: {fileID: 9197481963319205126, guid: d6e1b1fdd4c88c34b9b882a3efb620a8, type: 3}
 --- !u!82 &93948927
 AudioSource:
   m_ObjectHideFlags: 0
