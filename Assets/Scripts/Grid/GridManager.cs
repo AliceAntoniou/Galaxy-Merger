@@ -6,7 +6,6 @@ using UnityEngine.InputSystem;
 public class GridManager : ATeam
 {
     [SerializeField] private Grid grid;
-    [SerializeField] private BlackHole blackHole;
     [SerializeField] private SpriteRenderer tilePrefab;
     [SerializeField] private int centerDistance;
     [SerializeField] private GameObject shopUI;
@@ -16,12 +15,13 @@ public class GridManager : ATeam
     private int size;
     private List<SpriteRenderer> tiles = new();
 
-    [SerializeField] private CelestialObject.Type type;
-    [SerializeField] private Planet.Type ptype;
+    [SerializeField] private CelestialObject.Type interfaceType;
+    [SerializeField] private Planet.Type interfacePlanettype;
 
     private Vector3Int GetGridCenter()
     {
-        return new Vector3Int(-size - centerDistance, 0, 0);
+        if (team == Team.player) return new Vector3Int(-size - centerDistance, 0, 0);
+        return new Vector3Int(size + centerDistance, 0, 0);
     }
     private static Vector3Int GetBlackHoleCenter()
     {
@@ -29,21 +29,22 @@ public class GridManager : ATeam
     }
     private void Awake()
     {
+        setSize(blackhole.GetSize());
     }
     private void Start()
     {
-        setSize(blackHole.GetSize());
     }
     private void RemoveTile(SpriteRenderer tile)
     {
         var pos = new Vector3(tile.transform.position.x, tile.transform.position.y, 0);
-        if (!IsCellEmpty(pos))
-        {
-            foreach (var obj in blackHole.celestialObjects)
+        if (IsBlackhole(tile.transform.position) && !IsCellEmpty(pos))
             {
+            foreach (var obj in blackhole.celestialObjects)
+            {
+                Debug.Log($"{obj.transform.position}");
                 if (Vector3.Distance(obj.transform.position, pos) == 0)
                 {
-                    blackHole.celestialObjects.Remove(obj);
+                    blackhole.celestialObjects.Remove(obj);
                     Destroy(obj.gameObject);
                     break;
                 }
@@ -56,7 +57,7 @@ public class GridManager : ATeam
     {
         size = newSize;
         Vector3Int center = GetGridCenter();
-        tiles.ForEach(delegate (SpriteRenderer tile) { if (IsBlackhole(tile.transform.position)) RemoveTile(tile); });
+        tiles.ForEach(delegate (SpriteRenderer tile) { RemoveTile(tile); });
         tiles.Clear();
         for (int x = center.x - size; x <= center.x + size; x++)
         {
@@ -68,11 +69,22 @@ public class GridManager : ATeam
             }
         }
     }
+    public List<Vector3> GetTilesPositions()
+    {
+        List<Vector3> list = new();
+        foreach (var tile in tiles)
+        {
+            var pos = tile.transform.position;
+            pos.z = 0;
+            list.Add(pos);
+        }
+        return list;
+    }
     private void Update()
     {
-        if (size != blackHole.GetSize())
+        if (size != blackhole.GetSize())
         {
-            setSize(blackHole.GetSize());
+            setSize(blackhole.GetSize());
         }
     }
 
@@ -87,9 +99,23 @@ public class GridManager : ATeam
         return GetCellPos(Camera.main.ScreenToWorldPoint(mousePos));
     }
 
-    public void UpgradeBlackhole()
+    public bool UpgradeBlackhole()
     {
-        blackHole.Upgrade();
+        return blackhole.Upgrade();
+    }
+
+    public void SpawnCelestialObject(CelestialObject.Type type, Vector3 pos)
+    {
+        if (!IsCellEmpty(pos)) return;
+
+        if (blackhole.SpawnCelestialObject(type, pos))
+        {
+            unavailableGridPositions.Add(pos);
+        }
+    }
+    public void SpawnPlanet(StarSystem star, Planet.Type type)
+    {
+        star.AddPlanet(type);
     }
     public void OnClick(InputAction.CallbackContext context)
     {
@@ -104,30 +130,7 @@ public class GridManager : ATeam
         if (IsCellEmpty(pos))
         {
             //shopUI.SetActive(true);
-            if (type == CelestialObject.Type.StarSystem)
-            {
-                if (blackHole.SpawnCelestialObject(CelestialObject.Type.StarSystem, pos))
-                {
-                    unavailableGridPositions.Add(pos);
-                    return;
-                }
-            }
-            if (type == CelestialObject.Type.Nebula)
-            {
-                if (blackHole.SpawnCelestialObject(CelestialObject.Type.Nebula, pos))
-                {
-                    unavailableGridPositions.Add(pos);
-                    return;
-                }
-            }
-            if (type == CelestialObject.Type.StellarNurseries)
-            {
-                if (blackHole.SpawnCelestialObject(CelestialObject.Type.StellarNurseries, pos))
-                {
-                    unavailableGridPositions.Add(pos);
-                    return;
-                }
-            }
+            SpawnCelestialObject(interfaceType, pos);
             return;
         }
         CelestialObject obj = GetCelestialObject(pos);
@@ -135,24 +138,9 @@ public class GridManager : ATeam
         {
             if (obj.GetCelestialType() == CelestialObject.Type.StarSystem)
             {
-                var star = (StarSystem)obj;
-                if (ptype == Planet.Type.asteroidBelt)
-                {
-                    star.AddAsteroidBelt();
-                    return;
-                }
-                if (ptype == Planet.Type.iceBelt)
-                {
-                    return;
-                }
-                if (ptype == Planet.Type.slingshotPlanet)
-                {
-                    star.AddSlingshotPlanetSpawer();
-                    return;
-                }
+                SpawnPlanet((StarSystem)obj, interfacePlanettype);
+                return;
             }
-            //open obj info
-            Debug.Log("open obj info");
             return;
         }
     }
@@ -162,7 +150,7 @@ public class GridManager : ATeam
         mousePos = context.ReadValue<Vector2>();
     }
 
-    private bool IsCellEmpty(Vector3 gridPos)
+    public bool IsCellEmpty(Vector3 gridPos)
     {
         return !unavailableGridPositions.Contains(gridPos);
     }
@@ -184,21 +172,22 @@ public class GridManager : ATeam
     public bool IsOnGrid(Vector3 pos)
     {
         Vector3Int gridPos = grid.WorldToCell(pos);
-        int size = blackHole.GetSize();
+        int size = blackhole.GetSize();
 
+        Debug.Log(GetTileDistance(GetBlackHoleCenter(), gridPos));
         return (GetTileDistance(GetGridCenter(), gridPos) <= size &&
             GetTileDistance(GetBlackHoleCenter(), gridPos) >= size);
     }
     public bool IsBlackhole(Vector3 pos)
     {
         Vector3Int gridPos = grid.WorldToCell(pos);
-        int size = blackHole.GetSize();
+        int size = blackhole.GetSize();
 
         return GetTileDistance(GetBlackHoleCenter(), gridPos) < size;
     }
     public CelestialObject GetCelestialObject(Vector3 pos)
     {
-        foreach (var celestialObject in blackHole.celestialObjects)
+        foreach (var celestialObject in blackhole.celestialObjects)
         {
             if (celestialObject.transform.position == GetCellPos(pos)) return celestialObject;
         }

@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StellarNursery
   team: 0
   blackhole: {fileID: 0}
-  productionRate: 10
+  productionRate: 30
 --- !u!212 &3057936261937054037
 SpriteRenderer:
   serializedVersion: 2
