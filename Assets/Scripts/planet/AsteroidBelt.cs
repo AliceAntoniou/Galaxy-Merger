@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class AsteroidBelt : ATeam, IPlanet
+public class AsteroidBelt : Planet
 {
     [SerializeField] private float spawnRate;
     [SerializeField] private Asteroid asteroidPrefab;
