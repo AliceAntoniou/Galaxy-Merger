@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Nebula
   team: 0
   blackhole: {fileID: 0}
+  autodestructionTime: 60
   productionRate: 0.5
   productionNbr: 1
 --- !u!212 &215049532142287496

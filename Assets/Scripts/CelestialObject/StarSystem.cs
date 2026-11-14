@@ -65,10 +65,9 @@ public class StarSystem : CelestialObject
     {
 
     }
-
-    void Update()
+    private new void Update()
     {
-        
+        base.Update();
     }
     private void OnDestroy()
     {

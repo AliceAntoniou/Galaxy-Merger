@@ -15,8 +15,8 @@ public class Nebula : CelestialObject
         InvokeRepeating(nameof(Production), productionRate, productionRate);
     }
 
-    private void Update()
+    private new void Update()
     {
-
+        base.Update();
     }
 }

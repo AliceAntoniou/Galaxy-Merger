@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StarSystem
   team: 0
   blackhole: {fileID: 0}
+  autodestructionTime: 60
   asteroidBeltPrefab: {fileID: 4153173883546325709, guid: 2b57e65664d9f5149a9ae5ebacc4f738, type: 3}
   asteroidPrice: 100
   SlingshotPlanetSpawerPrefab: {fileID: 6400889670479686629, guid: 14ba7d81aafcc9048a724dead55472d9, type: 3}

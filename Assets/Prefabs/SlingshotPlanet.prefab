@@ -52,7 +52,7 @@ MonoBehaviour:
   detectionRange: 6
   acceleration: 0.01
   maxSpeed: 1
-  pv: 5
+  hp: 5
   damage: 3
   range: 3
   atkSpeed: 1

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEditor.PlayerSettings;
 
 [RequireComponent(typeof(Grid))]
 public class GridManager : ATeam
@@ -11,7 +12,6 @@ public class GridManager : ATeam
     [SerializeField] private GameObject shopUI;
 
     private Vector3 mousePos;
-    private HashSet<Vector3> unavailableGridPositions = new();
     private int size;
     private List<SpriteRenderer> tiles = new();
 
@@ -34,19 +34,31 @@ public class GridManager : ATeam
     private void RemoveTile(SpriteRenderer tile)
     {
         var pos = new Vector3(tile.transform.position.x, tile.transform.position.y, 0);
-        if (IsBlackhole(tile.transform.position) && !IsCellEmpty(pos))
+        if (!IsCellEmpty(pos))
+        {
+            if (IsBlackhole(tile.transform.position))
             {
-            foreach (var obj in blackhole.celestialObjects)
-            {
-                Debug.Log($"{obj.transform.position}");
-                if (Vector3.Distance(obj.transform.position, pos) == 0)
+                foreach (var obj in blackhole.celestialObjects)
                 {
-                    blackhole.celestialObjects.Remove(obj);
-                    Destroy(obj.gameObject);
-                    break;
+                    if (Vector3.Distance(obj.transform.position, pos) == 0)
+                    {
+                        blackhole.RemoveCelestialObject(obj);
+                        Destroy(obj.gameObject);
+                        break;
+                    }
                 }
             }
-            unavailableGridPositions.Remove(pos);
+            else if (!IsOnGrid(pos))
+            {
+                foreach (var obj in blackhole.celestialObjects)
+                {
+                    if (Vector3.Distance(obj.transform.position, pos) == 0)
+                    {
+                        obj.StartAutodestruction();
+                        break;
+                    }
+                }
+            }
         }
         Destroy(tile.gameObject);
     }
@@ -60,9 +72,17 @@ public class GridManager : ATeam
         {
             for (int y = -size; y <= size; y++)
             {
-                if (GetTileDistance(center, new Vector3Int(x, y, 0)) > size ||
-                    GetTileDistance(GetBlackHoleCenter(), new Vector3Int(x, y, 0)) < size) continue;
+                var pos = new Vector3Int(x, y, 0);
+                if (GetTileDistance(center, pos) > size ||
+                    GetTileDistance(GetBlackHoleCenter(), pos) < size) continue;
                 tiles.Add(Instantiate(tilePrefab, grid.CellToWorld(new Vector3Int(x, y, 2)), this.transform.rotation));
+                foreach (var obj in blackhole.celestialObjects)
+                {
+                    if (Vector3.Distance(obj.transform.position, grid.CellToWorld(pos)) == 0)
+                    {
+                        obj.StopAutodestruction();
+                    }
+                }
             }
         }
     }
@@ -110,10 +130,7 @@ public class GridManager : ATeam
     {
         if (!IsCellEmpty(pos)) return;
 
-        if (blackhole.SpawnCelestialObject(type, pos))
-        {
-            unavailableGridPositions.Add(pos);
-        }
+        blackhole.SpawnCelestialObject(type, pos);
     }
     public void SpawnPlanet(StarSystem star, Planet.Type type)
     {
@@ -154,7 +171,14 @@ public class GridManager : ATeam
 
     public bool IsCellEmpty(Vector3 gridPos)
     {
-        return !unavailableGridPositions.Contains(gridPos);
+        foreach (var obj in blackhole.celestialObjects)
+        {
+            if (Vector3.Distance(obj.transform.position, gridPos) == 0)
+            {
+                return false;
+            }
+        }
+        return true; ;
     }
 
     static private int GetTileDistance(Vector3Int a, Vector3Int b)
@@ -175,7 +199,6 @@ public class GridManager : ATeam
         Vector3Int gridPos = grid.WorldToCell(pos);
         int size = blackhole.GetSize();
 
-        Debug.Log(GetTileDistance(GetBlackHoleCenter(), gridPos));
         return (GetTileDistance(GetGridCenter(), gridPos) <= size &&
             GetTileDistance(GetBlackHoleCenter(), gridPos) >= size);
     }

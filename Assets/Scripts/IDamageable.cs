@@ -4,4 +4,5 @@ public interface IDamageable
 {
     public void TakeDamage(int dmg);
     public void HealHp(int heal);
+    public int GetHp();
 }

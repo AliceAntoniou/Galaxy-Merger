@@ -52,7 +52,7 @@ MonoBehaviour:
   detectionRange: 5
   acceleration: 0.1
   maxSpeed: 5
-  pv: 50
+  hp: 50
   damage: 5
 --- !u!212 &6053660015969074192
 SpriteRenderer:

@@ -618,6 +618,10 @@ PrefabInstance:
       propertyPath: enemyBlackHole
       value: 
       objectReference: {fileID: 2038182864}
+    - target: {fileID: 6035308770066700035, guid: de22c0e440e6b8941a932a8a029aba0a, type: 3}
+      propertyPath: celestialObjectAutodestructionTime
+      value: 60
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
