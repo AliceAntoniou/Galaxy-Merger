@@ -10,7 +10,9 @@ public class BlackHole : ATeam, IDamageable
     [SerializeField] public int stardust;
     [SerializeField] public int protoStars;
     [Space]
-    [SerializeField] private float stardustProductionRate;
+    [SerializeField] public CelestialObject.Type interfaceType;
+    [SerializeField] public Planet.Type interfacePlanettype;
+    [Space]
     [Header("Celestial Objects")]
     [SerializeField] public StarSystem starSystemPrefab;
     [SerializeField] private int starSystemStardustPrice;
@@ -21,10 +23,11 @@ public class BlackHole : ATeam, IDamageable
     [SerializeField] public Nebula nebulaPrefab;
     [SerializeField] private int nebulaStardustPrice;
     [Space]
-    [SerializeField] private BlackHole enemyBlackHole;
-    [SerializeField] private int size;
-    [Space]
     [SerializeField] private int[] blackholeUpgradePrice = { };
+    [Space]
+    [SerializeField] private BlackHole enemyBlackHole;
+    [SerializeField] private float stardustProductionRate;
+    [SerializeField] private int size;
     public List<CelestialObject> celestialObjects = new();
 
     public int GetMaxStardust()

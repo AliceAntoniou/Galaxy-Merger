@@ -15,9 +15,6 @@ public class GridManager : ATeam
     private int size;
     private List<SpriteRenderer> tiles = new();
 
-    [SerializeField] private CelestialObject.Type interfaceType;
-    [SerializeField] private Planet.Type interfacePlanettype;
-
     private Vector3Int GetGridCenter()
     {
         if (team == Team.player) return new Vector3Int(-size - centerDistance, 0, 0);
@@ -29,7 +26,7 @@ public class GridManager : ATeam
     }
     private void Awake()
     {
-        setSize(blackhole.GetSize());
+        SetSize(blackhole.GetSize());
     }
     private void Start()
     {
@@ -53,7 +50,7 @@ public class GridManager : ATeam
         }
         Destroy(tile.gameObject);
     }
-    private void setSize(int newSize)
+    private void SetSize(int newSize)
     {
         size = newSize;
         Vector3Int center = GetGridCenter();
@@ -84,7 +81,7 @@ public class GridManager : ATeam
     {
         if (size != blackhole.GetSize())
         {
-            setSize(blackhole.GetSize());
+            SetSize(blackhole.GetSize());
         }
     }
 
@@ -101,7 +98,12 @@ public class GridManager : ATeam
 
     public bool UpgradeBlackhole()
     {
-        return blackhole.Upgrade();
+        if (blackhole.Upgrade())
+        {
+            SetSize(blackhole.GetSize());
+            return true;
+        }
+        return false;
     }
 
     public void SpawnCelestialObject(CelestialObject.Type type, Vector3 pos)
@@ -130,7 +132,7 @@ public class GridManager : ATeam
         if (IsCellEmpty(pos))
         {
             //shopUI.SetActive(true);
-            SpawnCelestialObject(interfaceType, pos);
+            SpawnCelestialObject(blackhole.interfaceType, pos);
             return;
         }
         CelestialObject obj = GetCelestialObject(pos);
@@ -138,7 +140,7 @@ public class GridManager : ATeam
         {
             if (obj.GetCelestialType() == CelestialObject.Type.StarSystem)
             {
-                SpawnPlanet((StarSystem)obj, interfacePlanettype);
+                SpawnPlanet((StarSystem)obj, blackhole.interfacePlanettype);
                 return;
             }
             return;
@@ -157,11 +159,10 @@ public class GridManager : ATeam
 
     static private int GetTileDistance(Vector3Int a, Vector3Int b)
     {
-        int dx = b.x - a.x;     // signed deltas
+        int dx = b.x - a.x;
         int dy = b.y - a.y;
-        int x = Mathf.Abs(dx);  // absolute deltas
+        int x = Mathf.Abs(dx);
         int y = Mathf.Abs(dy);
-        // special case if we start on an odd row or if we move into negative x direction
         if ((dx < 0) ^ ((a.y & 1) == 1))
             x = Mathf.Max(0, x - (y + 1) / 2);
         else

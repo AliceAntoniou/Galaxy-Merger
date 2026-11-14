@@ -15,12 +15,6 @@ public class StarSystem : CelestialObject
     [SerializeField] public int maxPlanets = 1;
     private List<Planet> planets = new();
 
-
-    //public bool AddPlanet(planetTypes type)
-    //{
-    //    IPlanet planet = Instantiate(IPlanet.GetPlanet(type));
-    //    return true;
-    //}
     public bool AddAsteroidBelt()
     {
         if (blackhole.stardust < asteroidPrice) return false;
