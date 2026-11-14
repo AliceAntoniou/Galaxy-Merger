@@ -26,6 +26,7 @@ public class GridManager : ATeam
     }
     private void Awake()
     {
+        transform.position = blackhole.transform.position;
         SetSize(blackhole.GetSize());
     }
     private void Start()
@@ -138,7 +139,6 @@ public class GridManager : ATeam
     }
     public void OnClick(InputAction.CallbackContext context)
     {
-        if (!context.started) return;
         Vector3 pos = GetMousePosOnGrid();
         if (IsBlackhole(pos))
         {
