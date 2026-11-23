@@ -2,6 +2,8 @@ namespace Multi_1
 {
     public enum EntityType
     {
+        //None
+        None,
         // Celestial Objects (placed on the Galaxy Grid)
         StellarNursery, StarSystem, Nebula, TinyBlackHole,
         // Planets (placed on a Star System)

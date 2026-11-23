@@ -130,6 +130,110 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 624a2f1331f12904898d455829e6d23d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BlackHole
+--- !u!1001 &476596723
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3688420160637113317, guid: b2ac278e457111241a18a34d3cd10ca8, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3688420160637113317, guid: b2ac278e457111241a18a34d3cd10ca8, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3688420160637113317, guid: b2ac278e457111241a18a34d3cd10ca8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3688420160637113317, guid: b2ac278e457111241a18a34d3cd10ca8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3688420160637113317, guid: b2ac278e457111241a18a34d3cd10ca8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3688420160637113317, guid: b2ac278e457111241a18a34d3cd10ca8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3688420160637113317, guid: b2ac278e457111241a18a34d3cd10ca8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3688420160637113317, guid: b2ac278e457111241a18a34d3cd10ca8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3688420160637113317, guid: b2ac278e457111241a18a34d3cd10ca8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3688420160637113317, guid: b2ac278e457111241a18a34d3cd10ca8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3688420160637113317, guid: b2ac278e457111241a18a34d3cd10ca8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3688420160637113317, guid: b2ac278e457111241a18a34d3cd10ca8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4328548416899537728, guid: b2ac278e457111241a18a34d3cd10ca8, type: 3}
+      propertyPath: m_Name
+      value: Grid
+      objectReference: {fileID: 0}
+    - target: {fileID: 4443472588150965352, guid: b2ac278e457111241a18a34d3cd10ca8, type: 3}
+      propertyPath: blackhole
+      value: 
+      objectReference: {fileID: 557029037}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4328548416899537728, guid: b2ac278e457111241a18a34d3cd10ca8, type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 476596725}
+  m_SourcePrefab: {fileID: 100100000, guid: b2ac278e457111241a18a34d3cd10ca8, type: 3}
+--- !u!1 &476596724 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4328548416899537728, guid: b2ac278e457111241a18a34d3cd10ca8, type: 3}
+  m_PrefabInstance: {fileID: 476596723}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &476596725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 476596724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 3027539757
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  m_InScenePlacedDisabledByDefault: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  m_InScenePlaced: 0
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -278,67 +382,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 624a2f1331f12904898d455829e6d23d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BlackHole
---- !u!1001 &816227387
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 3688420160637113317, guid: 1eb660690c08d54449a00e4ded81cf9a, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3688420160637113317, guid: 1eb660690c08d54449a00e4ded81cf9a, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3688420160637113317, guid: 1eb660690c08d54449a00e4ded81cf9a, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3688420160637113317, guid: 1eb660690c08d54449a00e4ded81cf9a, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3688420160637113317, guid: 1eb660690c08d54449a00e4ded81cf9a, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3688420160637113317, guid: 1eb660690c08d54449a00e4ded81cf9a, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3688420160637113317, guid: 1eb660690c08d54449a00e4ded81cf9a, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3688420160637113317, guid: 1eb660690c08d54449a00e4ded81cf9a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3688420160637113317, guid: 1eb660690c08d54449a00e4ded81cf9a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3688420160637113317, guid: 1eb660690c08d54449a00e4ded81cf9a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4328548416899537728, guid: 1eb660690c08d54449a00e4ded81cf9a, type: 3}
-      propertyPath: m_Name
-      value: Grid
-      objectReference: {fileID: 0}
-    - target: {fileID: 4443472588150965352, guid: 1eb660690c08d54449a00e4ded81cf9a, type: 3}
-      propertyPath: blackhole
-      value: 
-      objectReference: {fileID: 557029037}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 1eb660690c08d54449a00e4ded81cf9a, type: 3}
 --- !u!1001 &1061790816
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -354,6 +397,10 @@ PrefabInstance:
     - target: {fileID: 1770272051559541496, guid: de22c0e440e6b8941a932a8a029aba0a, type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1770272051559541496, guid: de22c0e440e6b8941a932a8a029aba0a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4438585608818065608, guid: de22c0e440e6b8941a932a8a029aba0a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -420,6 +467,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: BlackHole
       objectReference: {fileID: 0}
+    - target: {fileID: 1770272051559541496, guid: de22c0e440e6b8941a932a8a029aba0a, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1770272051559541496, guid: de22c0e440e6b8941a932a8a029aba0a, type: 3}
+      propertyPath: m_TagString
+      value: BlackHole
+      objectReference: {fileID: 0}
     - target: {fileID: 4438585608818065608, guid: de22c0e440e6b8941a932a8a029aba0a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -476,4 +531,4 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 1342279820}
   - {fileID: 1061790816}
-  - {fileID: 816227387}
+  - {fileID: 476596723}
