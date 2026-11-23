@@ -278,7 +278,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 624a2f1331f12904898d455829e6d23d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BlackHole
---- !u!1001 &676425048
+--- !u!1001 &816227387
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -286,10 +286,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -3224563671769778461, guid: 1eb660690c08d54449a00e4ded81cf9a, type: 3}
-      propertyPath: GlobalObjectIdHash
-      value: 3815016391
-      objectReference: {fileID: 0}
     - target: {fileID: 3688420160637113317, guid: 1eb660690c08d54449a00e4ded81cf9a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -351,10 +347,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 932377015299454422, guid: de22c0e440e6b8941a932a8a029aba0a, type: 3}
-      propertyPath: GlobalObjectIdHash
-      value: 1140905374
-      objectReference: {fileID: 0}
     - target: {fileID: 1770272051559541496, guid: de22c0e440e6b8941a932a8a029aba0a, type: 3}
       propertyPath: m_Name
       value: BlackHole (1)
@@ -424,10 +416,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 932377015299454422, guid: de22c0e440e6b8941a932a8a029aba0a, type: 3}
-      propertyPath: GlobalObjectIdHash
-      value: 999815563
-      objectReference: {fileID: 0}
     - target: {fileID: 1770272051559541496, guid: de22c0e440e6b8941a932a8a029aba0a, type: 3}
       propertyPath: m_Name
       value: BlackHole
@@ -488,4 +476,4 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 1342279820}
   - {fileID: 1061790816}
-  - {fileID: 676425048}
+  - {fileID: 816227387}
