@@ -10,7 +10,7 @@ public class Unit : ATeam, IDamageable
     protected Transform target;
     [SerializeField] protected float acceleration;
     [SerializeField] protected float maxSpeed;
-    [SerializeField] protected int pv;
+    [SerializeField] protected int hp;
     [SerializeField] protected int damage;
     protected float currentMoveSpeed;
 
@@ -57,9 +57,9 @@ public class Unit : ATeam, IDamageable
 
     public void TakeDamage(int dmg)
     {
-        pv -= dmg;
+        hp -= dmg;
         currentMoveSpeed -= dmg;
-        if (pv <= 0)
+        if (hp <= 0)
         {
             Destroy(gameObject);
         }
@@ -67,6 +67,10 @@ public class Unit : ATeam, IDamageable
 
     public void HealHp(int heal)
     {
-        pv += heal;
+        hp += heal;
+    }
+    public int GetHp()
+    {
+        return hp;
     }
 }

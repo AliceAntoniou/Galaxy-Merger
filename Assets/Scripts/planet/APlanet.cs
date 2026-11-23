@@ -1,18 +1,20 @@
 using UnityEngine;
 
-public interface IPlanet
+public class Planet : ATeam
 {
-    //[Header("Planets Prefabs")]
-    //[SerializeField] public const AsteroidBelt asteroidBeltPrefab = Resources.Load("Assets/Prefabs/Asteroid belt.prefab") as AsteroidBelt;
-
-    public enum planetTypes
+    private Type type;
+    public enum Type
     {
-        asteroidBelt
+        asteroidBelt,
+        iceBelt,
+        slingshotPlanet
     }
-
-    //static public IPlanet GetPlanet(planetTypes type)
-    //{
-    //    if (type == planetTypes.asteroidBelt) { return asteroidBeltPrefab; }
-    //    return null;
-    //}
+    public Type GetPlanetType()
+    {
+        return type;
+    }
+    public void SetPlanetType(Type newType)
+    {
+        type = newType;
+    }
 }

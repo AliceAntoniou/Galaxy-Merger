@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
-using static IPlanet;
 
-public class StarSystem : ATeam
+public class StarSystem : CelestialObject
 {
     [Header("Planets Prefabs")]
     [SerializeField] public AsteroidBelt asteroidBeltPrefab;
@@ -13,14 +13,8 @@ public class StarSystem : ATeam
     [Space]
     [SerializeField] public int starNbr;
     [SerializeField] public int maxPlanets = 1;
-    private List<IPlanet> planets = new();
+    private List<Planet> planets = new();
 
-
-    //public bool AddPlanet(planetTypes type)
-    //{
-    //    IPlanet planet = Instantiate(IPlanet.GetPlanet(type));
-    //    return true;
-    //}
     public bool AddAsteroidBelt()
     {
         if (blackhole.stardust < asteroidPrice) return false;
@@ -33,6 +27,8 @@ public class StarSystem : ATeam
         planet.SetTeam(team);
 
         planets.Add(planet);
+        blackhole.stardust -= asteroidPrice;
+        asteroidPrice += asteroidPrice / 10;
         return true;
     }
     public bool AddSlingshotPlanetSpawer()
@@ -47,16 +43,38 @@ public class StarSystem : ATeam
         planet.SetTeam(team);
 
         planets.Add(planet);
+        blackhole.stardust -= slingshotPrice;
+        slingshotPrice += slingshotPrice / 10;
         return true;
+    }
+    public bool AddPlanet(Planet.Type type)
+    {
+        switch (type)
+        {
+            case Planet.Type.asteroidBelt:
+                return AddAsteroidBelt();
+            case Planet.Type.iceBelt:
+                return false;
+            case Planet.Type.slingshotPlanet:
+                return AddSlingshotPlanetSpawer();
+        }
+        return false;
     }
 
     void Start()
     {
 
     }
-
-    void Update()
+    private new void Update()
     {
-        
+        base.Update();
+    }
+    private void OnDestroy()
+    {
+        foreach (var planet in planets)
+        {
+            if (planet != null)
+                Destroy(planet.gameObject);
+        }
     }
 }

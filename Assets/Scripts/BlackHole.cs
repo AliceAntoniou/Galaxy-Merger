@@ -1,100 +1,146 @@
 using System;
 using System.Collections.Generic;
-using Unity.Netcode;
 using Unity.VisualScripting;
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
-using UnityEngine.UIElements;
-using UnityEngine.Windows;
-using static UnityEngine.CullingGroup;
-using static UnityEngine.EventSystems.EventTrigger;
 
-public class BlackHole : ATeam, IDamageable, IEquatable<BlackHole>
+public class BlackHole : ATeam, IDamageable
 {
+    [SerializeField] private BlackHole enemyBlackHole;
+    [SerializeField] private int size;
     [Header("Resources")]
     [SerializeField] public int stardust;
-    private NetworkVariable<int> stardustServ = new();
     [SerializeField] public int protoStars;
-    private NetworkVariable<int> protoStarsServ = new();
-    [Header("Planets Prefabs")]
-    [SerializeField] private StarSystem starSystemPrefab;
     [Space]
-    [SerializeField] public BlackHole enemyBlackHole;
-    [SerializeField] private int size;
-    private NetworkVariable<int> sizeServ = new();
-    private List<StarSystem> stars = new();
+    [SerializeField] public CelestialObject.Type interfaceType;
+    [SerializeField] public Planet.Type interfacePlanettype;
+    [Space]
+    [SerializeField] private int starSystemStardustPrice;
+    [SerializeField] private int stellarNurseryStardustPrice;
+    [SerializeField] private int nebulaStardustPrice;
+    [Space]
+    [SerializeField] private int[] blackholeUpgradePrice = { };
+    [Space]
+    [SerializeField] private float stardustProductionRate;
+    [SerializeField] private float priceAugmentation;
+    [SerializeField] private float downgradeRefund;
+    [SerializeField] private float celestialObjectAutodestructionTime;
+    [Space]
+    [Header("Celestial Objects Prefab")]
+    [SerializeField] public StarSystem starSystemPrefab;
+    [SerializeField] public StellarNursery stellarNurseryPrefab;
+    [SerializeField] public Nebula nebulaPrefab;
 
-    public bool Equals(BlackHole other)
+
+    public List<CelestialObject> celestialObjects = new();
+
+    public int GetMaxStardust()
     {
-        if (other.enemyBlackHole == enemyBlackHole &&
-            other.stardust == stardust &&
-            other.protoStars == protoStars &&
-            other.size == size) return true;
-        return false;
+        return (int)(GetUpgradePrice() + GetUpgradePrice() * (size / 10f));
+    }
+    private int GetUpgradePrice()
+    {
+        return blackholeUpgradePrice[size - 1];
     }
     public int GetSize() { return size; }
-    public BlackHole GetEnemyBlackHole() { return enemyBlackHole; }
-
-    public StarSystem SpawnStarSystem(int x, int y, int starNbr = 1)
+    public float GetCelestialObjectAutodestructionTime() { return celestialObjectAutodestructionTime; }
+    private void UpdateWordlSize()
     {
-        if (protoStars < starNbr) return null;
+        float scale = (size - 1 + stardust * size / (float)(size * GetUpgradePrice())) * 2;
+        transform.localScale = new Vector3(scale, scale, 1);
+    }
+    public BlackHole GetEnemyBlackHole() { return enemyBlackHole; }
+    public bool RemoveCelestialObject(CelestialObject obj)
+    {
+        return blackhole.celestialObjects.Remove(obj);
+    }
 
-        Vector3 pos = transform.position + new Vector3(x, y);
-        if (team == Team.player) { pos.x = -x; }
+    public StarSystem SpawnStarSystem(Vector2 pos)
+    {
+        if (protoStars < 1 || starSystemStardustPrice >= stardust) return null;
 
         StarSystem star = Instantiate(starSystemPrefab);
         star.transform.position = pos;
-        star.starNbr = starNbr;
+        star.starNbr = 1;
         star.blackhole = this;
         star.SetTeam(team);
+        star.SetCelestialType(CelestialObject.Type.StarSystem);
 
-        stars.Add(star);
+        celestialObjects.Add(star);
+        protoStars -= 1;
+        stardust -= starSystemStardustPrice;
+        starSystemStardustPrice += (int)(starSystemStardustPrice * priceAugmentation);
         return star;
     }
-
-    public override void OnNetworkSpawn()
+    public Nebula SpawnNebula(Vector2 pos)
     {
-        if (IsOwner)
+        if (nebulaStardustPrice >= stardust) return null;
+        Nebula nebula = Instantiate(nebulaPrefab);
+        nebula.transform.position = pos;
+        nebula.blackhole = this;
+        nebula.SetTeam(team);
+        nebula.SetCelestialType(CelestialObject.Type.Nebula);
+
+        celestialObjects.Add(nebula);
+        stardust -= nebulaStardustPrice;
+        nebulaStardustPrice += (int)(nebulaStardustPrice * priceAugmentation);
+        return nebula;
+    }
+    public StellarNursery SpawnStellarNursery(Vector2 pos)
+    {
+        if (stellarNurseryStardustPrice >= stardust) return null;
+        StellarNursery stellarNursery = Instantiate(stellarNurseryPrefab);
+        stellarNursery.transform.position = pos;
+        stellarNursery.blackhole = this;
+        stellarNursery.SetTeam(team);
+        stellarNursery.SetCelestialType(CelestialObject.Type.Nebula);
+
+        celestialObjects.Add(stellarNursery);
+        stardust -= stellarNurseryStardustPrice;
+        stellarNurseryStardustPrice += (int)(stellarNurseryStardustPrice * priceAugmentation);
+        return stellarNursery;
+    }
+
+    public CelestialObject SpawnCelestialObject(CelestialObject.Type type, Vector2 pos)
+    {
+        switch (type)
         {
-            SetTeam(Team.player);
-            transform.position = new Vector2(0, 0);
-        } else
-        {
-            SetTeam(Team.enemy);
-            transform.position = new Vector2(20, 0);
+            case CelestialObject.Type.StarSystem:
+                return SpawnStarSystem(pos);
+            case CelestialObject.Type.Nebula:
+                return SpawnNebula(pos);
+            case CelestialObject.Type.StellarNurseries:
+                return SpawnStellarNursery(pos);
         }
-        //stardustServ.OnValueChanged = (int previous, int current) => { if (stardustServ.Value != ) };
-        //protoStarsServ.OnValueChanged = protoStars;
-        //sizeServ.OnValueChanged = size;
-
+        return null;
     }
-    public override void OnNetworkDespawn()
+    public bool Upgrade()
     {
+        if (stardust < GetUpgradePrice()) return false;
+        stardust -= GetUpgradePrice();
+        size++;
+        return true;
     }
-
+    public void Downgrade()
+    {
+        size--;
+        stardust = (int)(GetUpgradePrice() * downgradeRefund);
+    }
     private void Awake()
     {
-        blackhole = this;
     }
-
+    private void StardustProduction()
+    {
+        if (stardust >= GetMaxStardust()) return;
+        stardust += size;
+    }
     private void Start()
     {
-        //SpawnStarSystem(3, 0).AddAsteroidBelt();
-        //SpawnStarSystem(3, 2).AddAsteroidBelt();
-        //SpawnStarSystem(3, -2).AddSlingshotPlanetSpawer();
+        InvokeRepeating("StardustProduction", stardustProductionRate, stardustProductionRate);
     }
-    private void FixedUpdate()
+    private void Update()
     {
-        if (enemyBlackHole == null) return;
-        stardust--;
-        if (stardust <= 0)
-        {
-            size--;
-            stardust = size * 1000;
-        }
-        transform.localScale = new Vector3(size - 1 + stardust / (size * 1000f), size - 1 + stardust / (size * 1000f), 1);
-        stardustServ.Value = stardust;
-        protoStarsServ.Value = protoStars;
-        sizeServ.Value = size;
+        UpdateWordlSize();
         if (size <= 0)
         {
             //end
@@ -111,20 +157,10 @@ public class BlackHole : ATeam, IDamageable, IEquatable<BlackHole>
         IDamageable target = collision.gameObject.GetComponent<IDamageable>();
         if (target == null) return;
 
+        TakeDamage(target.GetHp());
         target.TakeDamage(size);
     }
 
-    public void StartGame(BlackHole enemy)
-    {
-        enemyBlackHole = enemy;
-        SpawnStarSystem(3, 0);
-        //SubmitStartRpc();
-    }
-
-    [Rpc(SendTo.Server)]
-    void SubmitStartRpc(RpcParams rpcParams = default)
-    {
-    }
     public void HealHp(int heal)
     {
     }
@@ -132,6 +168,13 @@ public class BlackHole : ATeam, IDamageable, IEquatable<BlackHole>
     public void TakeDamage(int dmg)
     {
         stardust -= dmg;
-        stardustServ.Value = stardust;
+        if (stardust <= 0)
+        {
+            Downgrade();
+        }
+    }
+    public int GetHp()
+    {
+        return stardust;
     }
 }

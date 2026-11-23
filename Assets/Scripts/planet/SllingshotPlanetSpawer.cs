@@ -1,13 +1,13 @@
 using UnityEngine;
 
-public class SllingshotPlanetSpawer : ATeam, IPlanet
+public class SllingshotPlanetSpawer : Planet
 {
     [SerializeField] private float spawnRate;
     [SerializeField] private SlingshotPlanet slingshotPlanetPrefab;
 
     void Start()
     {
-        InvokeRepeating("SpawnSlingshotPlanet", spawnRate, spawnRate);
+        InvokeRepeating(nameof(SpawnSlingshotPlanet), spawnRate, spawnRate);
     }
 
     private void SpawnSlingshotPlanet()

@@ -86,7 +86,7 @@ MonoBehaviour:
   detectionRange: 6
   acceleration: 0.01
   maxSpeed: 1
-  pv: 5
+  hp: 5
   damage: 3
   range: 3
   atkSpeed: 1
@@ -152,7 +152,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!212 &6648502521599353826
 SpriteRenderer:
   serializedVersion: 2
