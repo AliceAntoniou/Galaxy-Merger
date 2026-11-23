@@ -1,4 +1,3 @@
-using Unity.Netcode;
 using UnityEngine;
 
 public enum Team
@@ -7,7 +6,7 @@ public enum Team
     enemy
 }
 
-public class ATeam : NetworkBehaviour
+public class ATeam : MonoBehaviour
 {
     [SerializeField] public Team team;
     [SerializeField] public BlackHole blackhole;
