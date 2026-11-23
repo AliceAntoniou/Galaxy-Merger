@@ -36,9 +36,10 @@ namespace Multi_1
             foreach (var d in definitions) _defs[d.type] = d;
         }
 
-        private void OnDestroy()
+        private new void OnDestroy()
         {
             if (Instance == this) Instance = null;
+            base.OnDestroy();
         }
 
         /// <summary>Axial hex coordinates -> world position (pointy-top). Adjust to match your grid.</summary>

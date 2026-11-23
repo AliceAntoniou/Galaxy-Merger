@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -69,12 +70,13 @@ public class StarSystem : CelestialObject
     {
         base.Update();
     }
-    private void OnDestroy()
+    private new void OnDestroy()
     {
         foreach (var planet in planets)
         {
             if (planet != null)
                 Destroy(planet.gameObject);
         }
+        base.OnDestroy();
     }
 }
