@@ -13,8 +13,8 @@ public class StellarNursery: CelestialObject
         InvokeRepeating("Production", productionRate, productionRate);
     }
 
-    void Update()
+    private new void Update()
     {
-        
+        base.Update();
     }
 }

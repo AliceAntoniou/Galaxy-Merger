@@ -46,10 +46,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ce7bb1d0277fec468e65076aa1e012a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridManager
+  team: 0
+  blackhole: {fileID: 0}
   grid: {fileID: 989562577255087746}
-  blackHole: {fileID: 0}
   tilePrefab: {fileID: 7262472930373216392, guid: 91788a5f91c319147bd6eb587187c039, type: 3}
   centerDistance: 0
+  shopUI: {fileID: 0}
+  interfaceType: 0
+  interfacePlanettype: 0
 --- !u!156049354 &989562577255087746
 Grid:
   m_ObjectHideFlags: 0
@@ -58,7 +62,7 @@ Grid:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4328548416899537728}
   m_Enabled: 1
-  m_CellSize: {x: 1.1, y: 1, z: 1}
+  m_CellSize: {x: 2.2, y: 2, z: 1}
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 1
   m_CellSwizzle: 0

@@ -7,15 +7,16 @@ public class Nebula : CelestialObject
 
     private void Production()
     {
+        if (blackhole.stardust >= blackhole.GetMaxStardust()) return;
         blackhole.stardust += productionNbr;
     }
-    void Start()
+    private void Start()
     {
-        InvokeRepeating("Production", productionRate, productionRate);
+        InvokeRepeating(nameof(Production), productionRate, productionRate);
     }
 
-    void Update()
+    private new void Update()
     {
-
+        base.Update();
     }
 }

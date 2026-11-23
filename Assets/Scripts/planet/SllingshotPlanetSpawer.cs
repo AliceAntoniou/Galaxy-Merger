@@ -7,7 +7,7 @@ public class SllingshotPlanetSpawer : Planet
 
     void Start()
     {
-        InvokeRepeating("SpawnSlingshotPlanet", spawnRate, spawnRate);
+        InvokeRepeating(nameof(SpawnSlingshotPlanet), spawnRate, spawnRate);
     }
 
     private void SpawnSlingshotPlanet()
