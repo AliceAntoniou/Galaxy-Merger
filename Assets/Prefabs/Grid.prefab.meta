@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Multi 1/Test/ExempleSpawnablePrefab.prefab.meta
+guid: b2ac278e457111241a18a34d3cd10ca8
+========
 guid: 1eb660690c08d54449a00e4ded81cf9a
+>>>>>>>> proto:Assets/Prefabs/Grid.prefab.meta
 PrefabImporter:
   externalObjects: {}
   userData: 

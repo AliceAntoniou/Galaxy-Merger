@@ -1,8 +1,11 @@
+using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Unit : ATeam, IDamageable
 {
+    public NetworkVariable<Vector3> netpos = new NetworkVariable<Vector3>();
     [SerializeField] protected float detectionRange;
     protected Transform target;
     [SerializeField] protected float acceleration;
@@ -42,6 +45,13 @@ public class Unit : ATeam, IDamageable
             {
                 target = col.transform;
             }
+        }
+    }
+    public void OnStateChanged(Vector3 previous, Vector3 current)
+    {
+        if (netpos.Value != previous)
+        {
+            transform.position = netpos.Value;
         }
     }
 
