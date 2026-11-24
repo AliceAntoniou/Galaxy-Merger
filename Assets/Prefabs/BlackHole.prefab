@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6035308770066700035}
   - component: {fileID: 2659536316975888831}
   - component: {fileID: 1674940467839788045}
+  - component: {fileID: 6078134220082354446}
   m_Layer: 6
   m_Name: BlackHole
   m_TagString: Untagged
@@ -190,3 +191,15 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
+--- !u!156049354 &6078134220082354446
+Grid:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1770272051559541496}
+  m_Enabled: 1
+  m_CellSize: {x: 2.2, y: 2, z: 1}
+  m_CellGap: {x: 0, y: 0, z: 0}
+  m_CellLayout: 1
+  m_CellSwizzle: 0

@@ -30,6 +30,7 @@ public class GridManager : ATeam
     }
     private void Start()
     {
+    //    TestFunction();
     }
     private void RemoveTile(SpriteRenderer tile)
     {
@@ -125,6 +126,31 @@ public class GridManager : ATeam
         }
         return false;
     }
+    
+    // public void TestFunction()
+    // {
+    //     Debug.Log("Test function called.");
+    //     size = 4;
+    //
+    //     for (int i = 0; i < 3; i++)
+    //     {
+    //         float angle = 360f / 3f * i;
+    //         float radians = angle * Mathf.Deg2Rad;
+    //
+    //         float cos = Mathf.Cos(radians);
+    //         float sin = Mathf.Sin(radians);
+    //         Debug.Log("Cos: " + cos + " Sin: " + sin);
+    //
+    //         Vector3 worldPosition = new Vector3(
+    //             cos * size * grid.cellSize.x,
+    //             sin * size * grid.cellSize.y,
+    //             0);
+    //         Vector3 pos = grid.WorldToCell(worldPosition);
+    //         pos.z = 0;
+    //
+    //         Debug.Log("Cell: " + pos);
+    //     }
+    // }
 
     public void SpawnCelestialObject(CelestialObject.Type type, Vector3 pos)
     {

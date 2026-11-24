@@ -8,6 +8,8 @@ public class BlackHole2 : MonoBehaviour, IDamageable
 {
     [SerializeField] private int size = 1;
     
+    private Grid grid;
+    
     [Header("Resources")] 
     
     public int stardust;
@@ -134,6 +136,27 @@ public class BlackHole2 : MonoBehaviour, IDamageable
     //     stardust = (int)(GetUpgradePrice() * downgradeRefund);
     // }
 
+    private void Awake()
+    {
+        grid = GetComponent<Grid>();
+    }
+
+    private void Start()
+    {
+        GameManager.instance.RegisterBlackHole(this);
+    }
+    
+    public void StartProduction()
+    {
+        isProducing = true;
+        StartCoroutine(AutoProduceStardust());
+    }
+    
+    public void StopProduction()
+    {
+        isProducing = false;
+    }
+
     private void StardustProduction()
     {
         if (stardust >= maxStardust) return;
@@ -155,11 +178,6 @@ public class BlackHole2 : MonoBehaviour, IDamageable
         
         stardustProductionRatePerSecond -= amount;
     }
-    
-    private void Start()
-    {
-        StartCoroutine(AutoProduceStardust());
-    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -172,6 +190,7 @@ public class BlackHole2 : MonoBehaviour, IDamageable
 
     public void HealHp(int heal)
     {
+        
     }
 
     public void TakeDamage(int dmg)
@@ -202,7 +221,7 @@ public class BlackHole2 : MonoBehaviour, IDamageable
 
     #region Getter
 
-        private int GetUpgradePrice()
+        public int GetUpgradePrice()
         {
             return blackholeUpgradePrice[size - 1];
         }
@@ -217,6 +236,11 @@ public class BlackHole2 : MonoBehaviour, IDamageable
             return size;
         }
 
+        public Grid GetGrid()
+        {
+            return grid;
+        }
+        
     #endregion
 
     private IEnumerator<WaitForSeconds> AutoProduceStardust()
