@@ -1,0 +1,52 @@
+using UnityEngine;
+
+public class Asteroid : Unit
+{
+    private void Start()
+    {
+
+    }
+
+    private void FixedUpdate()
+    {
+        DetectTarget();
+
+        MoveTowardsTarget();
+    }
+
+    private void MoveTowardsTarget()
+    {
+        Vector3 dir = target.position - transform.position;
+        if (currentMoveSpeed < 0)
+        {
+            currentMoveSpeed += acceleration * 5;
+        }
+        if (currentMoveSpeed < maxSpeed)
+        {
+            currentMoveSpeed += acceleration;
+        }
+        if (currentMoveSpeed > maxSpeed) currentMoveSpeed = maxSpeed;
+        transform.position += dir.normalized * currentMoveSpeed * Time.deltaTime;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if ((1 << collision.gameObject.layer) == GetMask())
+        {
+            return;
+        }
+
+        if (currentMoveSpeed > 0)
+        {
+            currentMoveSpeed = -maxSpeed;
+        } else
+        {
+            currentMoveSpeed -= currentMoveSpeed;
+        }
+        IDamageable target = collision.gameObject.GetComponent<IDamageable>();
+
+        if (target == null) return;
+
+        target.TakeDamage(damage);
+    }
+}
