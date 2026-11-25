@@ -182,9 +182,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89764b52575819941be2e7250f2c1a61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BlackHole2
-  size: 1
-  stardust: 0
-  protoStars: 0
+  ShowTopMostFoldoutHeaderGroup: 1
+  startingSize: 1
+  startingStardust: 0
   interfaceType: 0
   interfacePlanetType: 0
   stardustProductionRatePerSecond: 1

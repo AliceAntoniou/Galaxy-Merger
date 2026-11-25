@@ -8,9 +8,18 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Devroom.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SceneTest.unity
     guid: b9186c706c7f8c8408c3e99b8e3b923a
+  - enabled: 1
+    path: Assets/Scenes/Test/BootStrap.unity
+    guid: de3b7a4546fff144f9079d65ff1fd2ef
+  - enabled: 1
+    path: Assets/Scenes/Test/MainMenu.unity
+    guid: b853c5e63b36f034a8c7572d83d1c600
+  - enabled: 1
+    path: Assets/Scenes/Test/Game.unity
+    guid: 464f3be302d3e6247820519f40b94a2e
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

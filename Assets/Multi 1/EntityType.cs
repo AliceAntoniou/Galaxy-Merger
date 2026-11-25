@@ -2,13 +2,12 @@ namespace Multi_1
 {
     public enum EntityType
     {
-        //None
-        None,
+        None = 0,
         // Celestial Objects (placed on the Galaxy Grid)
         StellarNursery, StarSystem, Nebula, TinyBlackHole,
         // Planets (placed on a Star System)
         AsteroidBelt, FrozenBelt, SlingshotPlanetSpawner, ResearcherPlanet,
-        // Units (spawned by planets, server only) / Don't forget to add Network Transform to the prefab
+        // Units (spawned by planets, server only)
         Comet, Asteroid, SlingshotPlanet
     }
 }

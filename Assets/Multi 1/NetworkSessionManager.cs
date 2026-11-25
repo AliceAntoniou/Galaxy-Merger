@@ -244,7 +244,7 @@ namespace Multi_1
         private void SpawnPlayer(ulong ownerClientId, int slot, bool isAI)
         {
             var obj = Instantiate(playerPrefab);
-            obj.GetComponent<PlayerNetwork>().ServerInit(slot, isAI);
+            obj.GetComponent<BlackHole2>().ServerInit(slot, isAI);
             obj.SpawnWithOwnership(ownerClientId, true);
         }
 
