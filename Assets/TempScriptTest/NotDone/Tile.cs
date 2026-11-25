@@ -39,7 +39,7 @@ public class Tile : MonoBehaviour
     {
         Debug.Log("Tile clicked: " + gridPosition + ", EntityType: " + entityType);
 
-        // Only the human who owns this galaxy can build on it. The server re-validates anyway.
+        // Only the owners of this galaxy can build on it. The server re-validates anyway.
         if (blackhole == null || !blackhole.IsLocalHuman) return;
 
         // TODO: open the shop, then e.g.
