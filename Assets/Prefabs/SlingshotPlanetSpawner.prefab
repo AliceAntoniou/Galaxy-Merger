@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: -5177747902645966334}
   - component: {fileID: 6400889670479686629}
   - component: {fileID: 8647072367594679683}
+  - component: {fileID: 339443424387612554}
   m_Layer: 0
   m_Name: SlingshotPlanetSpawner
   m_TagString: Untagged
@@ -137,3 +138,18 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &339443424387612554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4776992712810072776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 704348e21711b054fb46b8f791920ecd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Multi_1.NetworkEntity
+  ShowTopMostFoldoutHeaderGroup: 1
+  Type: 7
+  stardustPerSecond: 0

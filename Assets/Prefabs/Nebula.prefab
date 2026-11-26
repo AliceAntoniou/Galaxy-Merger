@@ -9,8 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5841130797545264673}
+  - component: {fileID: 2005152956259113511}
   - component: {fileID: 7133898206490927512}
   - component: {fileID: 215049532142287496}
+  - component: {fileID: 7653256479314398223}
   m_Layer: 0
   m_Name: Nebula
   m_TagString: Untagged
@@ -33,6 +35,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2005152956259113511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1780938616385716630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 609613805
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  m_InScenePlacedDisabledByDefault: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  m_InScenePlaced: 0
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!114 &7133898206490927512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45,9 +74,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c1b6a4cd6f58d245948cc4901221482, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Nebula
+  ShowTopMostFoldoutHeaderGroup: 1
   team: 0
   blackhole: {fileID: 0}
-  autodestructionTime: 60
   productionRate: 0.5
   productionNbr: 1
 --- !u!212 &215049532142287496
@@ -109,3 +138,18 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &7653256479314398223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1780938616385716630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 704348e21711b054fb46b8f791920ecd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Multi_1.NetworkEntity
+  ShowTopMostFoldoutHeaderGroup: 1
+  Type: 3
+  stardustPerSecond: 5

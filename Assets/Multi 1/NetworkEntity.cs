@@ -7,15 +7,13 @@ namespace Multi_1
     public class NetworkEntity : NetworkBehaviour
     {
         public EntityType Type;
-        [SerializeField] private int stardustPerSecond; // production added to the owner while alive
+        [SerializeField] private int stardustPerSecond; // production added to the owner while alive (TBD)
 
         public readonly NetworkVariable<int> OwnerSlot = new();
         public readonly NetworkVariable<Vector2Int> Hex = new();
 
         // Only Celestial Objects occupy a tile (planets sit on their Star System's tile, units are free).
-        private bool OccupiesTile =>
-            Type == EntityType.StellarNursery || Type == EntityType.StarSystem ||
-            Type == EntityType.Nebula || Type == EntityType.TinyBlackHole;
+        private bool OccupiesTile => Type.IsCelestial();
 
         public void ServerInit(int ownerSlot, Vector2Int hex)
         {
@@ -29,7 +27,7 @@ namespace Multi_1
                 BlackHole2.GetBySlot(OwnerSlot.Value)?.UpProductionRate(stardustPerSecond);
 
             // Every peer: mark the tile as occupied so Tile.GetEntityType() is correct everywhere.
-            if (OccupiesTile) FindTile()?.SetEntityType(Type);
+            if (OccupiesTile) FindTile()?.SetEntity(this);
         }
 
         public override void OnNetworkDespawn()
